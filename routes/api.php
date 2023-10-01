@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ListComicController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/comics',[ListComicController::class, 'index']);
+
+Route::controller(ComicController::class)->group(function (){
+    Route::get('/categoria/{nombreCategoria}', 'comicsXCategoria');
+});
