@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('autor', 100)->nullable();
             $table->string('sinopsis', 500)->nullable();
             $table->integer('anio_publicacion')->nullable();
-            $table->binary('portada');
+            $table->binary('portada')->nullable();
             $table->increments('cod_comic');
 
             $table->unique(['cod_comic'], 'comic_pk');
