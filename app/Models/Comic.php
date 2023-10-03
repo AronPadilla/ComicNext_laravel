@@ -15,4 +15,5 @@ class comic extends Model
     public $timestamps = false;
 >>>>>>> 3c7e88af5d97e086891e523a7fb3357e5b52363a
     protected $primaryKey = 'cod_comic';
+    
 }
