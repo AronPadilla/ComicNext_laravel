@@ -29,6 +29,8 @@ Route::controller(ComicController::class)->group(function (){
     Route::get('/categoria/{nombreCategoria}', 'comicsXCategoria');
 });
 
-Route::get('/images/{id}',[ListComicController::class, 'images']);
+// Route::get('/images/{id}',[ListComicController::class, 'images']);
+
+Route::get('/images',[ListComicController::class, 'images']);
 
 Route::get('/comics',[ListComicController::class, 'index']);

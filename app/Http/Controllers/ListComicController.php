@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ListComicController extends Controller
 {
-    const MY_CONSTANT = 'value';
+    
     public function index()
     {
         // $comic = comic::all(); // Corrige el nombre de la variable a $comics
@@ -16,8 +16,20 @@ class ListComicController extends Controller
 
         return response()->json($comic);
     }
-    public function images($id){
-        $file =comic::find($id); 
+    // public function images(){
+    //     $file =comic::find(1); 
+    //     // dump($file->image);
+    //     $name = 'test.png';
+    //     // $name = $file->titulo;
+    //     file_put_contents($name , stream_get_contents($file->portada));
+    //     $headers = array(
+    //         // "Content-Type: {$file->mime}",
+    //         "Content-Type: d",
+    //     );
+    //     return response()->download($name, $name, $headers)->deleteFileAfterSend(true);
+    // }
+    function images(Request $request){
+        $file =comic::find(2); 
         // dump($file->image);
         $name = 'test.png';
         // $name = $file->titulo;
