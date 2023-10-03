@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ListComicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +15,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/comics',[ListComicController::class, 'index']);
+// Route::get('/comics', [ListComicController::class, 'images']);
+
 
 Route::controller(ComicController::class)->group(function (){
     Route::get('/categoria/{nombreCategoria}', 'comicsXCategoria');
 });
+
+// Route::get('/descargar', [ListComicController::class, 'images'])->name('comic.descargar');
+
+Route::get('/comics/{id}', [ListComicController::class, 'images']);
+

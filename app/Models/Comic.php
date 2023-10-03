@@ -9,4 +9,5 @@ class comic extends Model
 {
     use HasFactory;
     protected $table = 'comic';
+    protected $primaryKey = 'cod_comic';
 }
