@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\RegistroController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ComicController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,3 +24,4 @@ Route::get('/comics',[ListComicController::class, 'index']);
 Route::controller(ComicController::class)->group(function (){
     Route::get('/categoria/{nombreCategoria}', 'comicsXCategoria');
 });
+//Route::post('/RegistroComics',[RegistroController::class, 'register']);
