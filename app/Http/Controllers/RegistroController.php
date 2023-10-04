@@ -15,8 +15,8 @@ class RegistroController extends Controller
             'autor' => 'nullable|string|max:100',
             'sinopsis' => 'nullable|string|max:500',
             'anio_publicacion' => 'nullable|integer',
-            'portada' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Máximo 2MB4
             
+            'portada' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Máximo 2MB
         ]);
 
         // Almacenar la imagen en el sistema de archivos local
@@ -25,15 +25,19 @@ class RegistroController extends Controller
         // $file_path = $file->getRealPath();
         // $file_name = $file->getClientOriginalName();
         // Crear un nuevo cómic en la base de datos
-        comic::create([
+        Comic::create([
             'titulo' => $request->input('titulo'),
             'autor' => $request->input('autor'),
             'sinopsis' => $request->input('sinopsis'),
+<<<<<<< HEAD
             'anio_publicacion' => $request -> input('anio_publicacion'),
             'portada' => str_replace("''", "'", pg_escape_bytea(file_get_contents($file))) 
             // 'portada' => pg_read_binary_file($file)
+=======
+            'portada' => str_replace("''", "'", pg_escape_bytea(file_get_contents($file)))
+>>>>>>> 7382d7a16c25b28ad279db016af22221e1f8f3ff
         ]);
 
-        return view('Registro'); 
+        return view('welcome'); 
     }
 }

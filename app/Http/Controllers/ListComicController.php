@@ -30,12 +30,5 @@ class ListComicController extends Controller
         return response()->download($name, $name, $headers)->deleteFileAfterSend(true);
     }
 
-    function TodasLasimagenes(){
-        $files = comic::all();
-
-        foreach($files as $file){
-
-            ListComicController::images($file->cod_comic);
-        }
-    }
+   
 }
