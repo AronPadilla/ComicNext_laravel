@@ -22,11 +22,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::get('/comics', [ListComicController::class, 'images']);
-
+Route::get('/comics',[ListComicController::class, 'index']);
 
 Route::controller(ComicController::class)->group(function (){
     Route::get('/categoria/{nombreCategoria}', 'comicsXCategoria');
+    Route::get('/prueba', 'prueba');
+    Route::get('/portadas/{comicId}', 'getPortada')->name('getPortada');
+    Route::get('/imagen/{imgId}', 'getImagen');
 });
 
 // Route::get('/images/{id}',[ListComicController::class, 'images']);
@@ -35,3 +37,5 @@ Route::get('/images/{id}',[ListComicController::class, 'images']);
 
 Route::get('/comics',[ListComicController::class, 'index']);
 
+
+//Route::post('/RegistroComics',[RegistroController::class, 'register']);
