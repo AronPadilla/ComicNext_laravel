@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ComicController;
+use App\Http\Controllers\ListComicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +24,8 @@ Route::get('/comics',[ListComicController::class, 'index']);
 
 Route::controller(ComicController::class)->group(function (){
     Route::get('/categoria/{nombreCategoria}', 'comicsXCategoria');
+    Route::get('/prueba', 'prueba');
+    Route::get('/portadas/{comicId}', 'getPortada')->name('getPortada');
+    Route::get('/imagen/{imgId}', 'getImagen');
 });
+
