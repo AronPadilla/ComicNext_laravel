@@ -30,7 +30,7 @@ class RegistroController extends Controller
             'autor' => $request->input('autor'),
             'sinopsis' => $request->input('sinopsis'),
             'anio_publicacion' => $request -> input('anio_publicacion'),
-            'portada' => pg_escape_bytea(file_get_contents($file))
+            'portada' => str_replace("''", "'", pg_escape_bytea(file_get_contents($file))) 
             // 'portada' => pg_read_binary_file($file)
         ]);
 

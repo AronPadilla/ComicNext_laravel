@@ -37,6 +37,6 @@
 
     <button type="submit">Registrar Comic</button>
 </form>
-
+<img src="http://127.0.0.1:8000/api/images/46" />
 </body>
 </html>

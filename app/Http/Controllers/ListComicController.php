@@ -16,20 +16,9 @@ class ListComicController extends Controller
 
         return response()->json($comic);
     }
-    // public function images(){
-    //     $file =comic::find(1); 
-    //     // dump($file->image);
-    //     $name = 'test.png';
-    //     // $name = $file->titulo;
-    //     file_put_contents($name , stream_get_contents($file->portada));
-    //     $headers = array(
-    //         // "Content-Type: {$file->mime}",
-    //         "Content-Type: d",
-    //     );
-    //     return response()->download($name, $name, $headers)->deleteFileAfterSend(true);
-    // }
-    function images(Request $request){
-        $file =comic::find(2); 
+
+    function images($id){
+        $file =comic::find($id); 
         // dump($file->image);
         $name = 'test.png';
         // $name = $file->titulo;
@@ -39,5 +28,14 @@ class ListComicController extends Controller
             "Content-Type: d",
         );
         return response()->download($name, $name, $headers)->deleteFileAfterSend(true);
+    }
+
+    function TodasLasimagenes(){
+        $files = comic::all();
+
+        foreach($files as $file){
+
+            ListComicController::images($file->cod_comic);
+        }
     }
 }
