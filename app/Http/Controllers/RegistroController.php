@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class RegistroController extends Controller
 {
+    const MY_CONSTANT = 'value';
+
     public function register(Request $request)
     {
         // Validar la solicitud
@@ -15,8 +17,7 @@ class RegistroController extends Controller
             'autor' => 'nullable|string|max:100',
             'sinopsis' => 'nullable|string|max:500',
             'anio_publicacion' => 'nullable|integer',
-            
-            'portada' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Máximo 2MB
+            'portada' => 'required|image', // Máximo 2MB
         ]);
 
         // Almacenar la imagen en el sistema de archivos local
@@ -29,15 +30,10 @@ class RegistroController extends Controller
             'titulo' => $request->input('titulo'),
             'autor' => $request->input('autor'),
             'sinopsis' => $request->input('sinopsis'),
-<<<<<<< HEAD
             'anio_publicacion' => $request -> input('anio_publicacion'),
-            'portada' => str_replace("''", "'", pg_escape_bytea(file_get_contents($file))) 
-            // 'portada' => pg_read_binary_file($file)
-=======
             'portada' => str_replace("''", "'", pg_escape_bytea(file_get_contents($file)))
->>>>>>> 7382d7a16c25b28ad279db016af22221e1f8f3ff
         ]);
 
         return view('welcome'); 
-    }
+    } 
 }
