@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RegistroController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ComicController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\ListComicController;
 |
 */
 
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -29,3 +31,11 @@ Route::controller(ComicController::class)->group(function (){
     Route::get('/imagen/{imgId}', 'getImagen');
 });
 
+// Route::get('/images/{id}',[ListComicController::class, 'images']);
+
+Route::get('/images/{id}',[ListComicController::class, 'images']);
+
+Route::get('/comics',[ListComicController::class, 'index']);
+
+
+//Route::post('/RegistroComics',[RegistroController::class, 'register']);
