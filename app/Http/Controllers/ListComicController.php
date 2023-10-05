@@ -8,33 +8,39 @@ use Illuminate\Http\Request;
 
 class ListComicController extends Controller
 {
+    function listasComic(){
+        $comics = Comic::select('cod_comic', 'titulo','sinopsis')->get();
+        $comicsConPortada = [];
     
-    public function index()
-    {
-
-        // $comic = comic::all(); // Corrige el nombre de la variable a $comics
-        $comics = Comic::select('cod_comic', 'titulo', 'autor', 'sinopsis', 'anio_publicacion','portada')->get();
-        foreach($comics as $comic){
-            $type = 'png';
-            $data = stream_get_contents($comic->portada);
-            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-            $comic->portada = $base64;
+        foreach ($comics as $comic) {
+            $portadaUrl = route('getPortada', ['comicId' => $comic->cod_comic]);
+    
+            // Agregar el cómic y su URL de portada al arreglo
+            $comicsConPortada[] = [
+                'comic' => $comic,
+                'portadaUrl' => $portadaUrl,
+            ];
         }
-        
-        return response()->json($comics);
+    
+        return response()->json($comicsConPortada);
+    
     }
+    public function obtenerPortada($comicId)
+    {
+        $comic = DB::table('comic')->where('cod_comic', $comicId)->first();
 
-    function images($id){
-        $file =comic::find($id); 
-        // dump($file->image);
-        $name = 'test.png';
-        // $name = $file->titulo;
-        file_put_contents($name , stream_get_contents($file->portada));
-        $headers = array(
-            // "Content-Type: {$file->mime}",
-            "Content-Type: d",
-        );
-        return response()->download($name, $name, $headers)->deleteFileAfterSend(true);
+        if (!$comic || !$comic->portada) {
+            // Maneja el caso en el que el cómic o la portada no se encuentren.
+            return response()->json(['error' => 'Cómic o portada no encontrados'], 404);
+        }
+
+        // Leer el contenido binario de la portada como una cadena de bytes
+        $contenidoPortada = stream_get_contents($comic->portada);
+
+        // Devolver la imagen de portada como una respuesta HTTP con el tipo de contenido adecuado
+        return Response::make($contenidoPortada, 200, [
+            'Content-Type' => 'image/jpeg',
+        ]);
     }
 
    
