@@ -37,5 +37,5 @@ Route::get('/images/{id}',[ListComicController::class, 'images']);
 
 Route::get('/comics',[ListComicController::class, 'index']);
 
-
+Route::post('/registrar-comic', [ComicController::class, 'registrarComic']);
 //Route::post('/RegistroComics',[RegistroController::class, 'register']);

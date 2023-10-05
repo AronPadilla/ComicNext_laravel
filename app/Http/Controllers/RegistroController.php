@@ -1,14 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\comic;
+use App\Models\Comic;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 
 class RegistroController extends Controller
 {
-    const MY_CONSTANT = 'value';
-
     public function register(Request $request)
     {
         // Validar la solicitud
@@ -18,22 +16,39 @@ class RegistroController extends Controller
             'sinopsis' => 'nullable|string|max:500',
             'anio_publicacion' => 'nullable|integer',
             'portada' => 'required|image', // Máximo 2MB
+            'categorias' => 'required|array', // Debes recibir un array de categorías
         ]);
 
         // Almacenar la imagen en el sistema de archivos local
-        // $portadaPath = $request->file('portada')->store('portadas', 'public');
         $file = $request->file('portada');
-        // $file_path = $file->getRealPath();
-        // $file_name = $file->getClientOriginalName();
+        $portada = str_replace("''", "'", pg_escape_bytea(file_get_contents($file)));
+
         // Crear un nuevo cómic en la base de datos
-        Comic::create([
+        $comic = new Comic([
             'titulo' => $request->input('titulo'),
             'autor' => $request->input('autor'),
             'sinopsis' => $request->input('sinopsis'),
-            'anio_publicacion' => $request -> input('anio_publicacion'),
-            'portada' => str_replace("''", "'", pg_escape_bytea(file_get_contents($file)))
+            'anio_publicacion' => $request->input('anio_publicacion'),
+            'portada' => $portada,
         ]);
 
-        return view('welcome'); 
-    } 
+        // Guardar el cómic
+        $comic->save();
+
+        // Obtener las categorías seleccionadas desde React
+        $categoriasSeleccionadas = $request->input('categorias');
+
+        // Asignar las categorías al cómic
+        foreach ($categoriasSeleccionadas as $categoriaId) {
+            $categoria = Categoria::find($categoriaId);
+
+            if ($categoria) {
+                // Asigna la categoría al cómic
+                $comic->categorias()->attach($categoria);
+            }
+        }
+
+        // Si deseas responder con un mensaje de éxito o redireccionar a otra vista, puedes hacerlo aquí
+        return response()->json(['mensaje' => 'Cómic registrado con éxito']);
+    }
 }
