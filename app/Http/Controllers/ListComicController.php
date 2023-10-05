@@ -11,10 +11,17 @@ class ListComicController extends Controller
     
     public function index()
     {
-        // $comic = comic::all(); // Corrige el nombre de la variable a $comics
-        $comic = Comic::select('cod_comic', 'titulo', 'autor', 'sinopsis', 'anio_publicacion')->get();
 
-        return response()->json($comic);
+        // $comic = comic::all(); // Corrige el nombre de la variable a $comics
+        $comics = Comic::select('cod_comic', 'titulo', 'autor', 'sinopsis', 'anio_publicacion','portada')->get();
+        foreach($comics as $comic){
+            $type = 'png';
+            $data = stream_get_contents($comic->portada);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+            $comic->portada = $base64;
+        }
+        
+        return response()->json($comics);
     }
 
     function images($id){
