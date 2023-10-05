@@ -35,8 +35,16 @@
     <label for="portada">Portada:</label><br>
     <input type="file" id="portada" name="portada" accept="image/*" required><br><br>
 
+    <label for="codigosCategoria">Categorías:</label><br>
+    <select id="codigosCategoria" name="codigosCategoria[]" multiple required>
+        <option value="1">Terror</option>
+        <option value="2">Acción</option>
+        <option value="3">Ciencia Ficción</option>
+        <option value="4">Romance</option>
+    </select><br><br>
+
     <button type="submit">Registrar Comic</button>
 </form>
-<img src="http://127.0.0.1:8000/api/images/46" />
+
 </body>
 </html>

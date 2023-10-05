@@ -6,18 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ComicController;
 use App\Http\Controllers\ListComicController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -41,3 +29,17 @@ Route::get('/listascomics',[ListComicController::class, 'listasComic']);
 
 
 //Route::post('/RegistroComics',[RegistroController::class, 'register']);
+
+
+// Route::get('/descargar', [ListComicController::class, 'images'])->name('comic.descargar');
+
+//Route::get('/comics/{id}', [ListComicController::class, 'images']);
+//Route::get('/json', [ListComicController::class, 'index']);
+
+// Route::post('/register', 'ComicController@register');
+
+//Route::post('/RegistroComics',[RegistroController::class, 'register']);
+
+Route::post('/registro', [RegistroController::class, 'register']);
+
+Route::get('/registro', [RegistroController::class, 'register']);
