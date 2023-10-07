@@ -68,6 +68,16 @@ class ComicController extends Controller
         ]);
     }
     
+    public function tituloExistente($titulo)
+    {
+        $comic = DB::table('comic')->where('titulo', $titulo)->first();
+        if (!$comic){
+            return response()->json(['exists' => false]);
+        }else{
+            return response()->json(['exists' => true]);
+        }
+    }
+
     public function getImagen($imgId)
     {
         $comic = DB::table('imagenes')->where('id_img', $imgId)->first();

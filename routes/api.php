@@ -17,6 +17,7 @@ Route::controller(ComicController::class)->group(function (){
     Route::get('/prueba', 'prueba');
     Route::get('/portadas/{comicId}', 'getPortada')->name('getPortada');
     Route::get('/imagen/{imgId}', 'getImagen');
+    Route::get('/tituloExistente/{titulo}', 'tituloExistente');
 });
 
 // Route::get('/images/{id}',[ListComicController::class, 'images']);
