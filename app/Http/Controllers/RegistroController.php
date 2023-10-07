@@ -16,7 +16,7 @@ class RegistroController extends Controller
         // $autor = $request->input('autor');
         // $anioPublicacion = $request->input('anio_publicacion');
         // $sinopsis = $request->input('sinopsis');
-        $portada = $request->file('portada');
+        $portada = $request->portada;
 
         DB::beginTransaction(); // Iniciar una transacción en la base de datos
 
@@ -25,13 +25,13 @@ class RegistroController extends Controller
             $comic = new Comic();
             $comic->titulo = $request -> titulo;
             $comic->autor = $request -> autor;
-            $comic->anio_publicacion = $request -> anioPublicacion;
+            $comic->anio_publicacion = $request -> anio_publicacion;
             $comic->sinopsis = $request -> sinopsis;
-            $comic->portada = str_replace("''", "'", pg_escape_bytea(file_get_contents($portada)));
+            $comic->portada = base64_encode($portada);
             $comic->save();
 
             // Obtener el ID del cómic registrado
-            //$codigoComic = $comic->cod_comic;
+            $codigoComic = $comic->cod_comic;
 
             // $codigosCategoria = $request->input('codigosCategoria');
 
