@@ -12,10 +12,10 @@ class RegistroController extends Controller
 {
     public function register(Request $request)
     {
-        $titulo = $request->input('titulo');
-        $autor = $request->input('autor');
-        $anioPublicacion = $request->input('anio_publicacion');
-        $sinopsis = $request->input('sinopsis');
+        // $titulo = $request->input('titulo');
+        // $autor = $request->input('autor');
+        // $anioPublicacion = $request->input('anio_publicacion');
+        // $sinopsis = $request->input('sinopsis');
         $portada = $request->file('portada');
 
         DB::beginTransaction(); // Iniciar una transacción en la base de datos
@@ -23,30 +23,30 @@ class RegistroController extends Controller
         try {
             // Registrar el cómic
             $comic = new Comic();
-            $comic->titulo = $titulo;
-            $comic->autor = $autor;
-            $comic->anio_publicacion = $anioPublicacion;
-            $comic->sinopsis = $sinopsis;
+            $comic->titulo = $request -> titulo;
+            $comic->autor = $request -> autor;
+            $comic->anio_publicacion = $request -> anioPublicacion;
+            $comic->sinopsis = $request -> sinopsis;
             $comic->portada = str_replace("''", "'", pg_escape_bytea(file_get_contents($portada)));
             $comic->save();
 
             // Obtener el ID del cómic registrado
-            $codigoComic = $comic->cod_comic;
+            //$codigoComic = $comic->cod_comic;
 
-            $codigosCategoria = $request->input('codigosCategoria');
+            // $codigosCategoria = $request->input('codigosCategoria');
 
-            if (is_array($codigosCategoria)) {
-                foreach ($codigosCategoria as $codCategoria) {
-                    // Asociar el cómic con las categorías seleccionadas
-                    Comic_categoria::create([
-                        'cod_comic' => $codigoComic,
-                        'cod_categoria' => $codCategoria,
-                    ]);
-                }
-            } else {
-                // Manejar un error si $codigosCategoria no es un array
-                throw new \Exception('Los códigos de categoría no son válidos.');
-            }
+            // if (is_array($codigosCategoria)) {
+            //     foreach ($codigosCategoria as $codCategoria) {
+            //         // Asociar el cómic con las categorías seleccionadas
+            //         Comic_categoria::create([
+            //             'cod_comic' => $codigoComic,
+            //             'cod_categoria' => $codCategoria,
+            //         ]);
+            //     }
+            // } else {
+            //     // Manejar un error si $codigosCategoria no es un array
+            //     throw new \Exception('Los códigos de categoría no son válidos.');
+            // }
 
             DB::commit(); // Confirmar la transacción si todo se realizó con éxito
 
