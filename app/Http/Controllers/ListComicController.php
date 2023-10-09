@@ -35,13 +35,18 @@ class ListComicController extends Controller
         }
 
         // Leer el contenido binario de la portada como una cadena de bytes
-        $contenidoPortada = stream_get_contents($comic->portada);
+        $contenidoPortada = base64_decode($comic->portada);
 
         // Devolver la imagen de portada como una respuesta HTTP con el tipo de contenido adecuado
         return Response::make($contenidoPortada, 200, [
             'Content-Type' => 'image/jpeg',
         ]);
     }
+
+
+
+
+
 
    
 }

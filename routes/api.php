@@ -22,7 +22,7 @@ Route::controller(ComicController::class)->group(function (){
 
 // Route::get('/images/{id}',[ListComicController::class, 'images']);
 
-Route::get('/images/{id}',[ListComicController::class, 'images']);
+// Route::get('/images',[ListComicController::class, 'images']);
 
 Route::get('/comics',[ListComicController::class, 'index']);
 
@@ -44,3 +44,4 @@ Route::get('/listascomics',[ListComicController::class, 'listasComic']);
 Route::post('/registro', [RegistroController::class, 'register']);
 
 Route::get('/registro', [RegistroController::class, 'register']);
+
