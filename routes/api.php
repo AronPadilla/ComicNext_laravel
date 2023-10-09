@@ -43,5 +43,5 @@ Route::get('/listascomics',[ListComicController::class, 'listasComic']);
 
 Route::post('/registro', [RegistroController::class, 'register']);
 
-Route::get('/registro', [RegistroController::class, 'register']);
+//Route::get('/registro', [RegistroController::class, 'register']);
 
