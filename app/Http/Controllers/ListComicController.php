@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\comic; // Agrega un punto y coma al final de esta línea
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
 
 class ListComicController extends Controller
 {
@@ -35,18 +36,13 @@ class ListComicController extends Controller
         }
 
         // Leer el contenido binario de la portada como una cadena de bytes
-        $contenidoPortada = base64_decode($comic->portada);
+        $contenidoPortada = stream_get_contents($comic->portada);
 
         // Devolver la imagen de portada como una respuesta HTTP con el tipo de contenido adecuado
         return Response::make($contenidoPortada, 200, [
             'Content-Type' => 'image/jpeg',
         ]);
     }
-
-
-
-
-
 
    
 }

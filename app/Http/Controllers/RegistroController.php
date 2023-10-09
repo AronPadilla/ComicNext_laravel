@@ -34,21 +34,46 @@ class RegistroController extends Controller
 
             // Obtener el ID del cómic registrado
             $codigoComic = $comic->cod_comic;
+            $categorias = $request->categoria;
+            $codCategorias = array(); 
 
+            foreach ($categorias as $categoria) {
+                switch ($categoria) {
+                    case "Terror":
+                        $codCategorias[] = 1; 
+                        break;
+                    case "CienciaFiccion":
+                        $codCategorias[] = 3;
+                        break;
+                    case "Comedia":
+                        $codCategorias[] = 4;
+                        break;
+                    case "Accion":
+                        $codCategorias[] = 2;
+                        break;
+                    default:
+                        echo "Opción no válida";
+                        break;
+                }
+            }
+
+// Ahora $codCategorias contiene los códigos numéricos correspondientes a las categorías.
+
+            
             // $codigosCategoria = $request->input('codigosCategoria');
 
-            // if (is_array($codigosCategoria)) {
-            //     foreach ($codigosCategoria as $codCategoria) {
-            //         // Asociar el cómic con las categorías seleccionadas
-            //         Comic_categoria::create([
-            //             'cod_comic' => $codigoComic,
-            //             'cod_categoria' => $codCategoria,
-            //         ]);
-            //     }
-            // } else {
-            //     // Manejar un error si $codigosCategoria no es un array
-            //     throw new \Exception('Los códigos de categoría no son válidos.');
-            // }
+            if (is_array($codCategorias)) {
+                 foreach ($codCategorias as $codCategoria) {
+                     // Asociar el cómic con las categorías seleccionadas
+                     Comic_categoria::create([
+                         'cod_comic' => $codigoComic,
+                         'cod_categoria' => $codCategoria,
+                    ]);
+                }
+            } else {
+                 // Manejar un error si $codigosCategoria no es un array
+                 throw new \Exception('Los códigos de categoría no son válidos.');
+             }
 
             DB::commit(); // Confirmar la transacción si todo se realizó con éxito
 
