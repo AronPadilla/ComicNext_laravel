@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Comic;
+use App\Models\comic;
 use App\Models\Comic_categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
