@@ -9,4 +9,4 @@ Route::get('/', function () {
 });
 //Route::post('/',[RegistroController::class, 'register']);
 //Route::get('/RegistroComics',[RegistroController::class, 'register']);
-//gitRoute::post('/', [RegistroController::class, 'register'])->name('computer');
+Route::post('/', [RegistroController::class, 'register'])->name('computer');
