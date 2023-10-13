@@ -28,7 +28,7 @@ class RegistroController extends Controller
             $comic->anio_publicacion = $request -> anio_publicacion;
             $comic->sinopsis = $request -> sinopsis;
             // var_dump($portada);
-            $comic->portada = str_replace("''", "'", pg_escape_bytea(base64_decode($portada)));
+            $comic->portada =  pg_escape_bytea(base64_decode($portada));
             // var_dump($portada);
             $comic->save();
 

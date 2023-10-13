@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('titulo', 60);
             $table->string('autor', 100)->nullable();
             $table->string('sinopsis', 500)->nullable();
-            $table->integer('anio_publicacion')->nullable();
+            $table->date('anio_publicacion')->nullable();
             $table->binary('portada')->nullable();
            
 

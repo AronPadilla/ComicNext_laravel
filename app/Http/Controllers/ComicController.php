@@ -22,6 +22,7 @@ class ComicController extends Controller
             ->join('comic', 'comic_categoria.cod_comic', '=', 'comic.cod_comic')
             ->where('comic_categoria.cod_categoria', $categoria->cod_categoria)
             ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis')
+            ->orderBy('comic.titulo')
             ->get();
     
         // Crear un arreglo para almacenar los cómics y sus URLs de portada
