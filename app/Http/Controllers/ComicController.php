@@ -21,7 +21,7 @@ class ComicController extends Controller
         $comics = DB::table('comic_categoria')
             ->join('comic', 'comic_categoria.cod_comic', '=', 'comic.cod_comic')
             ->where('comic_categoria.cod_categoria', $categoria->cod_categoria)
-            ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis')
+            ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis', 'comic.anio_publicacion', 'comic.autor')
             ->orderBy('comic.titulo')
             ->get();
     
