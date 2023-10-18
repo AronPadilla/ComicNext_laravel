@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('playlist', function (Blueprint $table) {
-            $table->integer('cod_comic')->index('pertenece_playlist_fk');
-            $table->integer('cod_usuario')->index('tiene_playlist_fk');
-            $table->string('nombre_playlist', 60);
-
-            $table->primary(['cod_comic', 'cod_usuario']);
+        Schema::table('usuario', function (Blueprint $table) {
+            $table->foreign(['cod_rol'], 'fk_usuario_tiene_rol_rol')->references(['cod_rol'])->on('rol')->onUpdate('RESTRICT')->onDelete('RESTRICT');
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('playlist');
+        Schema::table('usuario', function (Blueprint $table) {
+            $table->dropForeign('fk_usuario_tiene_rol_rol');
+        });
     }
 };

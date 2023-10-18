@@ -20,11 +20,9 @@ return new class extends Migration
             $table->string('sinopsis', 500)->nullable();
             $table->date('anio_publicacion')->nullable();
             $table->binary('portada')->nullable();
-           
 
             $table->unique(['cod_comic'], 'comic_pk');
         });
-        
     }
 
     /**
