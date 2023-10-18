@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 class ListComicController extends Controller
 {
     function listasComic(){
-        $comics = Comic::select('cod_comic', 'titulo','sinopsis', 'anio_publicacion', 'autor')->orderBy('titulo')->get();
+        $comics = Comic::select('cod_comic', 'titulo','sinopsis')->orderBy('titulo')->get();
         $comicsConPortada = [];
     
         foreach ($comics as $comic) {

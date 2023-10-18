@@ -21,7 +21,7 @@ class ComicController extends Controller
         $comics = DB::table('comic_categoria')
             ->join('comic', 'comic_categoria.cod_comic', '=', 'comic.cod_comic')
             ->where('comic_categoria.cod_categoria', $categoria->cod_categoria)
-            ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis', 'comic.anio_publicacion', 'comic.autor')
+            ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis')
             ->orderBy('comic.titulo')
             ->get();
     
@@ -41,15 +41,6 @@ class ComicController extends Controller
         return response()->json($comicsConPortada);
     }
     
-    public function prueba(Request $request)
-    {
-        
-        $comic = DB::table('imagenes')
-        ->select('imagenes.id_img', 'imagenes.nombre_img')
-        ->get();
-
-        return response()->json($comic);
-    }
 
     public function getPortada($comicId)
     {
@@ -79,21 +70,26 @@ class ComicController extends Controller
         }
     }
 
-    public function getImagen($imgId)
+    public function comic($id)
     {
-        $comic = DB::table('imagenes')->where('id_img', $imgId)->first();
-
-        if (!$comic || !$comic->imagen) {
-            // Maneja el caso en el que el cómic o la portada no se encuentren.
-            return response()->json(['error' => 'Cómic o portada no encontrados'], 404);
+        $comic = Comic::select('cod_comic', 'titulo','sinopsis', 'anio_publicacion', 'autor')
+            ->where('cod_comic', $id)
+            ->first();
+        if (!$comic) {
+            return response()->json(['error' => 'Cómic no encontrado'], 404);
         }
     
-        // Leer el contenido binario de la portada como una cadena de bytes
-        $contenidoPortada = stream_get_contents($comic->imagen);
+        $comicsConPortada = [];
     
-        // Devolver la imagen de portada como una respuesta HTTP con el tipo de contenido adecuado
-        return Response::make($contenidoPortada, 200, [
-            'Content-Type' => 'image/jpeg',
-        ]);
+        
+        $portadaUrl = route('getPortada', ['comicId' => $comic->cod_comic]);
+    
+        // Agregar el cómic y su URL de portada al arreglo
+        $comicsConPortada[] = [
+           'comic' => $comic,
+            'portadaUrl' => $portadaUrl,
+        ];
+    
+        return response()->json($comicsConPortada);
     }
 }
