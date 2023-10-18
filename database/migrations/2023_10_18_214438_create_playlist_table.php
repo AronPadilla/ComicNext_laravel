@@ -14,13 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('playlist', function (Blueprint $table) {
-            $table->integer('cod_comic')->index('pertenece_playlist_fk');
             $table->integer('cod_usuario')->index('tiene_playlist_fk');
+            $table->increments('cod_playlist');
             $table->string('nombre_playlist', 60);
-            $table->binary('imagen_playlist')->nullable();
+            $table->binary('imagen_playlist');
 
-            $table->primary(['cod_comic', 'cod_usuario']);
-            $table->unique(['cod_comic', 'cod_usuario'], 'playlist_pk');
+            $table->primary(['cod_usuario', 'cod_playlist']);
+            $table->unique(['cod_usuario', 'cod_playlist'], 'playlist_pk');
         });
     }
 

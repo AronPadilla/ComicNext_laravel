@@ -14,7 +14,6 @@ return new class extends Migration
     public function up()
     {
         Schema::table('playlist', function (Blueprint $table) {
-            $table->foreign(['cod_comic'], 'fk_playlist_pertenece_comic')->references(['cod_comic'])->on('comic')->onUpdate('RESTRICT')->onDelete('RESTRICT');
             $table->foreign(['cod_usuario'], 'fk_playlist_tiene_pla_usuario')->references(['cod_usuario'])->on('usuario')->onUpdate('RESTRICT')->onDelete('RESTRICT');
         });
     }
@@ -27,7 +26,6 @@ return new class extends Migration
     public function down()
     {
         Schema::table('playlist', function (Blueprint $table) {
-            $table->dropForeign('fk_playlist_pertenece_comic');
             $table->dropForeign('fk_playlist_tiene_pla_usuario');
         });
     }

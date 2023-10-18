@@ -18,7 +18,6 @@ return new class extends Migration
             $table->integer('cod_comic')->index('tiene_categoria_fk');
 
             $table->primary(['cod_categoria', 'cod_comic']);
-            $table->unique(['cod_categoria', 'cod_comic'], 'comic_categoria_pk');
         });
     }
 

@@ -11,9 +11,8 @@ class Playlist extends Model
 
     protected $table = 'playlist'; 
 
-    protected $fillable = ['cod_comic','cod_usuario','nombre_playlist','imagen_playlist'];
+    protected $fillable = ['cod_usuario','cod_playlist','nombre_playlist','imagen_playlist'];
     public $timestamps = false;
  
-    protected $primaryKey = ['cod_comic', 'cod_usuario']; // Columnas que actúan como clave primaria
-    public $incrementing = false;
+    protected $primaryKey = ['cod_usuario', 'cod_playlist']; // Columnas que actúan como clave primaria
 }
