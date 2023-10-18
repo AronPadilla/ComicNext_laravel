@@ -42,7 +42,7 @@ class ComicController extends Controller
     }
     
 
-    public function getPortada($comicId)
+    public function getPortada(Request $request, $comicId)
     {
         $comic = DB::table('comic')->where('cod_comic', $comicId)->first();
 
