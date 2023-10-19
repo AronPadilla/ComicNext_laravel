@@ -19,7 +19,7 @@ Route::controller(ComicController::class)->group(function (){
     Route::get('/portadas/{comicId}', 'getPortada')->name('getPortada');
     Route::get('/imagen/{imgId}', 'getImagen');
     Route::get('/tituloExistente/{titulo}', 'tituloExistente');
-    Route::get('/comic/{id}', 'comicsXCategoria');
+    Route::get('/comic/{id}', 'comic');
 });
 
 Route::controller(PlaylistController::class)->group(function (){
