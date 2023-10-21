@@ -4,6 +4,7 @@ use App\Http\Controllers\RegistroController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ComicController;
+use App\Http\Controllers\CrearPlaylistController;
 use App\Http\Controllers\ListComicController;
 use App\Http\Controllers\PlaylistController;
 
@@ -49,5 +50,7 @@ Route::get('/listascomics',[ListComicController::class, 'listasComic']);
 //Route::post('/RegistroComics',[RegistroController::class, 'register']);
 
 Route::match(['get', 'post'], '/registro', [RegistroController::class, 'register']);
+
+Route::match(['get', 'post'], '/registroplay', [CrearPlaylistController::class, 'registro']);
 
 
