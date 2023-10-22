@@ -32,4 +32,17 @@ class ComicPlaylistController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function comicRegistrado(Request $request){
+        $comic = DB::table('comic_playlist')
+        ->where('cod_comic', $request->cod_comic)
+        ->where('cod_usuario', $request->cod_usuario)
+        ->where('cod_playlist', $request->cod_playlist)
+        ->first();
+        if (!$comic){
+            return response()->json(['exists' => false]);
+        }else{
+            return response()->json(['exists' => true]);
+        }
+    }
 }

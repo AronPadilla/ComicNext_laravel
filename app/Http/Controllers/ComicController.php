@@ -44,7 +44,9 @@ class ComicController extends Controller
 
     public function getPortada(Request $request, $comicId)
     {
-        $comic = DB::table('comic')->where('cod_comic', $comicId)->first();
+        $comic = DB::table('comic')
+        ->where('cod_comic', $comicId)
+        ->first();
 
         if (!$comic || !$comic->portada) {
             // Maneja el caso en el que el cómic o la portada no se encuentren.
