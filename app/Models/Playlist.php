@@ -7,12 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Playlist extends Model
 {
-    use HasFactory;
+     use HasFactory;
 
     protected $table = 'playlist'; 
-
-    protected $fillable = ['cod_usuario','cod_playlist','nombre_playlist','imagen_playlist'];
+    protected $primaryKey = 'cod_playlist'; // Columna que actúa como clave primaria
     public $timestamps = false;
+    public $incrementing = true; // Laravel asume que la clave primaria es autoincremental por defecto, por lo que esto debería estar en true
+
+    // Indica las columnas que son asignables en masa
+    protected $fillable = ['cod_usuario', 'nombre_playlist', 'imagen_playlist'];
  
-    protected $primaryKey = ['cod_usuario', 'cod_playlist']; // Columnas que actúan como clave primaria
+    
+
 }
