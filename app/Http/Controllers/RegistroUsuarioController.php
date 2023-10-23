@@ -10,20 +10,20 @@ class RegistroUsuarioController extends Controller
     public function registrar(Request $request)
     {
         // Validar los datos del formulario (debes personalizar estas validaciones)
-        $request->validate([
-            'name' => 'required',
-            'username' => 'required|unique:usuario',
-            'email' => 'required|email|unique:usuario',
-            'password' => 'required|min:6',
-        ]);
+       // $request->validate([
+         //   'name' => 'required',
+           // 'username' => 'required|unique:usuario',
+            //'email' => 'required|email|unique:usuario',
+            //'password' => 'required|min:6',
+       // ]
 
-        // Crear un nuevo usuario en la base de datos (ajusta esto según tu base de datos)
+        // Crear un nuevo usuario en la base de datos 
         $usuario = new Usuario();
-        $usuario->nombre_u = $request->name;
-        $usuario->username = $request->username;
+        $usuario->nombre_completo = $request->name;
+        $usuario->nombre_u = $request->username;
         $usuario->correo = $request->email;
         $usuario->password = bcrypt($request->password); // Hash de la contraseña
-        $usuario->cod_rol = 1; // Ajusta esto según tu sistema de roles
+        $usuario->cod_rol = 2; 
 
         $usuario->save();
 

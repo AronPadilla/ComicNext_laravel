@@ -8,6 +8,7 @@ use App\Http\Controllers\CrearPlaylistController;
 use App\Http\Controllers\ListComicController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\ComicPlaylistController;
+use App\Http\Controllers\RegistroUsuarioController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -58,5 +59,6 @@ Route::get('/listascomics',[ListComicController::class, 'listasComic']);
 Route::match(['get', 'post'], '/registro', [RegistroController::class, 'register']);
 
 Route::match(['get', 'post'], '/registroplay', [CrearPlaylistController::class, 'registro']);
-
-
+//Route::get('/registro-usuario', 'RegistroUsuarioController@index')->name('registro-usuario.index');
+//Route::post('/registro-usuario', 'RegistroUsuarioController@registrar')->name('registro-usuario.registrar');
+Route::match(['get', 'post'], '/registro-usuario', [RegistroUsuarioController::class, 'registrar']);
