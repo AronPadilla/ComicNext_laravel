@@ -59,6 +59,10 @@ Route::get('/listascomics',[ListComicController::class, 'listasComic']);
 Route::match(['get', 'post'], '/registro', [RegistroController::class, 'register']);
 
 Route::match(['get', 'post'], '/registroplay', [CrearPlaylistController::class, 'registro']);
+Route::get('/listasPlaylist/{idUsuario}',[CrearPlaylistController::class, 'getPlaylist']);
 //Route::get('/registro-usuario', 'RegistroUsuarioController@index')->name('registro-usuario.index');
 //Route::post('/registro-usuario', 'RegistroUsuarioController@registrar')->name('registro-usuario.registrar');
 Route::match(['get', 'post'], '/registro-usuario', [RegistroUsuarioController::class, 'registrar']);
+
+
+
