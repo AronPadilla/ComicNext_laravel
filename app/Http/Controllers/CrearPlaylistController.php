@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 use App\Models\Playlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 class CrearPlaylistController extends Controller
 {
-        public function registro(Request $request)
+    public function registro(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -33,4 +34,49 @@ class CrearPlaylistController extends Controller
             return response()->json(['error' => 'Error al guardar la playlist: ' . $e->getMessage()], 500);
         }
     }
+
+    function getPlaylist($idUsuario)
+    {
+        $playlists = Playlist::where('cod_usuario', '=', $idUsuario)
+                    ->select('cod_playlist', 'nombre_playlist')
+                    ->get();
+
+
+        if (!$playlists) {
+            // Maneja el caso en que la categoría no se encuentra.
+            return response()->json(['error' => 'Playlists no encontradas'], 404);
+        }
+
+        $playlistConPortada = [];
+
+        foreach ($playlists as $playlist) {
+            $portadaUrl = route('getPortadaPlaylist', ['playlistId' => $playlist->cod_playlist]);
+    
+            // Agregar el cómic y su URL de portada al arreglo
+            $playlistConPortada[] = [
+                'playlist' => $playlist,
+                'portadaUrl' => $portadaUrl,
+            ];
+        }
+    
+        return response()->json($playlistConPortada);
+    }
+
+    public function Images($playlistId)
+    {
+        $playlist = DB::table('playlist')
+        ->where('cod_playlist', $playlistId)
+        ->first();
+
+        if (!$playlist || !$playlist->imagen_playlist) {
+            return response()->json(['error' => 'Playlist o portada no encontrados'], 404);
+        }
+
+        $contenidoPortada = stream_get_contents($playlist->imagen_playlist);
+
+        return Response::make($contenidoPortada, 200, [
+            'Content-Type' => 'image/jpeg',
+        ]);
+    }
+
 }
