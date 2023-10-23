@@ -9,6 +9,7 @@ use App\Http\Controllers\ListComicController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\ComicPlaylistController;
 use App\Http\Controllers\RegistroUsuarioController;
+use App\Http\Controllers\BuscarController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -43,6 +44,13 @@ Route::get('/comics',[ListComicController::class, 'index']);
 
 Route::get('/listascomics',[ListComicController::class, 'listasComic']);
 
+Route::controller(BuscarController::class)->group(function (){
+    Route::get('/buscar/{nombreComic}', 'comicFiltrar');
+    Route::get('/prueba', 'prueba');
+    Route::get('/portadas/{comicId}', 'getPortada')->name('getPortada');
+    Route::get('/imagen/{imgId}', 'getImagen');
+    Route::get('/comic/{id}', 'comic');
+});
 
 //Route::post('/RegistroComics',[RegistroController::class, 'register']);
 
