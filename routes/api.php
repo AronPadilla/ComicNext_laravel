@@ -39,6 +39,7 @@ Route::controller(ComicPlaylistController::class)->group(function (){
 Route::controller(PlaylistController::class)->group(function (){
     Route::get('/playlists/{idUsuario}', 'obtenerPlaylist');
     Route::get('/portadaPlaylist/{playlistId}', 'getPortadaPlaylist')->name('getPortadaPlaylist');
+    Route::get('/playlist/{idPlaylist}', 'datosPlaylist');
 });
 // Route::get('/images/{id}',[ListComicController::class, 'images']);
 

@@ -54,4 +54,20 @@ class PlaylistController extends Controller
             'Content-Type' => 'image/jpeg',
         ]);
     }
+    function datosPlaylist($idPlaylist){
+        $playlist = DB::table('playlist')
+        ->where('cod_playlist', $idPlaylist)
+        ->select('cod_playlist','nombre_playlist')
+        ->first();
+
+        $playlistConPortada = [];
+
+        $portadaUrl = route('getPortadaPlaylist', ['playlistId' => $playlist->cod_playlist]);
+
+        $playlistConPortada[] = [
+            'playlist' => $playlist,
+            'portadaUrl' => $portadaUrl,
+        ];
+        return response()->json($playlistConPortada);
+    }
 }
