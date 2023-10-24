@@ -53,7 +53,7 @@ class ComicPlaylistController extends Controller
         ->where('cod_playlist', $request->cod_playlist)
         ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis', 'comic.anio_publicacion', 'comic.autor')
         ->get();
-
+        $comics = $comics->reverse();
         $comicsConPortada = [];
     
         foreach ($comics as $comic) {
@@ -84,5 +84,29 @@ class ComicPlaylistController extends Controller
         return Response::make($contenidoPortada, 200, [
             'Content-Type' => 'image/jpeg',
         ]);
+    }
+
+    public function obtenerComicsPlaylistTitulo(Request $request){
+        $comics = DB::table('comic_playlist')
+        ->join('comic', 'comic_playlist.cod_comic', '=', 'comic.cod_comic')
+        ->where('cod_usuario', $request->cod_usuario)
+        ->where('cod_playlist', $request->cod_playlist)
+        ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis', 'comic.anio_publicacion', 'comic.autor')
+        ->orderBy('comic.titulo')
+        ->get();
+
+        $comicsConPortada = [];
+    
+        foreach ($comics as $comic) {
+            $portadaUrl = route('getPortada', ['comicId' => $comic->cod_comic]);
+    
+            // Agregar el cómic y su URL de portada al arreglo
+            $comicsConPortada[] = [
+                'comic' => $comic,
+                'portadaUrl' => $portadaUrl,
+            ];
+        }
+    
+        return response()->json($comicsConPortada);
     }
 }
