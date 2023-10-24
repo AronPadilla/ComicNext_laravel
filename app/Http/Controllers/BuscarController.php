@@ -11,12 +11,17 @@ class BuscarController extends Controller
 {
     public function comicFiltrar(Request $request, $nombreComic)
     {
-        $comics = DB::table('comic')
+        // $comics = DB::table('comic')
+        //     ->select('cod_comic', 'titulo', 'sinopsis')
+        //     ->where('titulo', 'LIKE', '%'.$nombreComic.'%')
+        //     ->orderBy('comic.titulo')
+        //     ->get();
+
+        $comics = Comic::whereRaw("lower(unaccent(titulo)) LIKE ?", ['%' . strtolower($nombreComic) . '%'])
             ->select('cod_comic', 'titulo', 'sinopsis')
-            ->where('titulo', 'LIKE', '%'.$nombreComic.'%')
-            ->orderBy('comic.titulo')
+            ->orderBy('titulo')
             ->get();
-        
+
         if (!$comics) {
             // Maneja el caso en que la categoría no se encuentra.
             return response()->json(['error' => 'Comic no encontrada'], 404);
