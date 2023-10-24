@@ -76,6 +76,6 @@ Route::get('/listasPlaylist/{idUsuario}',[CrearPlaylistController::class, 'getPl
 //Route::post('/registro-usuario', 'RegistroUsuarioController@registrar')->name('registro-usuario.registrar');
 Route::match(['get', 'post'], '/registro-usuario', [RegistroUsuarioController::class, 'registrar']);
 
-Route::post('/verificar-credenciales', [UserController::class, 'verificarCredenciales']);
+Route::get('/verificar-credenciales', [UserController::class, 'verificarCredenciales']);
 
 
