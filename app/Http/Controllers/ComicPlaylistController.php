@@ -45,4 +45,44 @@ class ComicPlaylistController extends Controller
             return response()->json(['exists' => true]);
         }
     }
+
+    public function obtenerComicsPlaylist(Request $request){
+        $comics = DB::table('comic_playlist')
+        ->join('comic', 'comic_playlist.cod_comic', '=', 'comic.cod_comic')
+        ->where('cod_usuario', $request->cod_usuario)
+        ->where('cod_playlist', $request->cod_playlist)
+        ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis', 'comic.anio_publicacion', 'comic.autor')
+        ->get();
+
+        $comicsConPortada = [];
+    
+        foreach ($comics as $comic) {
+            $portadaUrl = route('getPortada', ['comicId' => $comic->cod_comic]);
+    
+            // Agregar el cómic y su URL de portada al arreglo
+            $comicsConPortada[] = [
+                'comic' => $comic,
+                'portadaUrl' => $portadaUrl,
+            ];
+        }
+    
+        return response()->json($comicsConPortada);
+    }
+
+    public function getPortada(Request $request, $comicId)
+    {
+        $comic = DB::table('comic')
+        ->where('cod_comic', $comicId)
+        ->first();
+
+        if (!$comic || !$comic->portada) {
+            return response()->json(['error' => 'Cómic o portada no encontrados'], 404);
+        }
+
+        $contenidoPortada = stream_get_contents($comic->portada);
+
+        return Response::make($contenidoPortada, 200, [
+            'Content-Type' => 'image/jpeg',
+        ]);
+    }
 }
