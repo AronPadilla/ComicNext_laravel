@@ -69,7 +69,7 @@ class ComicPlaylistController extends Controller
         return response()->json($comicsConPortada);
     }
 
-    public function getPortada(Request $request, $comicId)
+    public function getPortadaC(Request $request, $comicId)
     {
         $comic = DB::table('comic')
         ->where('cod_comic', $comicId)
@@ -98,7 +98,7 @@ class ComicPlaylistController extends Controller
         $comicsConPortada = [];
     
         foreach ($comics as $comic) {
-            $portadaUrl = route('getPortada', ['comicId' => $comic->cod_comic]);
+            $portadaUrl = route('getPortadaC', ['comicId' => $comic->cod_comic]);
     
             // Agregar el cómic y su URL de portada al arreglo
             $comicsConPortada[] = [

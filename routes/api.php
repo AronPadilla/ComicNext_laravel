@@ -30,6 +30,9 @@ Route::controller(ComicPlaylistController::class)->group(function (){
     //Route::get('/playlists/{idUsuario}', 'obtenerPlaylist');
     Route::get('/comicRegistradoPlaylist/{request}', 'comicRegistrado');
     Route::match(['get', 'post'], '/registroComicPlaylist', 'registrarComicAPlaylist');
+    Route::get('/comicPlaylist/{request}', 'obtenerComicsPlaylist');
+    Route::get('/portadasC/{comicId}', 'getPortadaC')->name('getPortadaC');
+    Route::get('/comicPlaylistXTitulo/{request}', 'obtenerComicsPlaylistTitulo');
 });
 
 Route::controller(PlaylistController::class)->group(function (){
