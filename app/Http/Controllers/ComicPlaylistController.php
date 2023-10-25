@@ -86,11 +86,11 @@ class ComicPlaylistController extends Controller
         ]);
     }
 
-    public function obtenerComicsPlaylistTitulo(Request $request){
+    public function obtenerComicsPlaylistTitulo(Request $request, $cod_usuario, $cod_playlist){
         $comics = DB::table('comic_playlist')
         ->join('comic', 'comic_playlist.cod_comic', '=', 'comic.cod_comic')
-        ->where('cod_usuario', $request->cod_usuario)
-        ->where('cod_playlist', $request->cod_playlist)
+        ->where('cod_usuario', $cod_usuario)
+        ->where('cod_playlist', $cod_playlist)
         ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis', 'comic.anio_publicacion', 'comic.autor')
         ->orderBy('comic.titulo')
         ->get();
