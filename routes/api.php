@@ -51,6 +51,7 @@ Route::get('/listascomics',[ListComicController::class, 'listasComic']);
 
 Route::controller(BuscarController::class)->group(function (){
     Route::get('/buscar/{nombreComic}', 'comicFiltrar');
+    Route::get('/artista/{nombreComic}', 'filtrarArtista');
     Route::get('/prueba', 'prueba');
     Route::get('/portadas/{comicId}', 'getPortada')->name('getPortada');
     Route::get('/imagen/{imgId}', 'getImagen');
