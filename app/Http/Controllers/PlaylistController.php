@@ -54,9 +54,10 @@ class PlaylistController extends Controller
             'Content-Type' => 'image/jpeg',
         ]);
     }
-    function datosPlaylist($idPlaylist){
+    function datosPlaylist(Request $request, $idUsuario, $idPlaylist){
         $playlist = DB::table('playlist')
         ->where('cod_playlist', $idPlaylist)
+        ->where('cod_usuario',  $idUsuario)
         ->select('cod_playlist','nombre_playlist')
         ->first();
 
