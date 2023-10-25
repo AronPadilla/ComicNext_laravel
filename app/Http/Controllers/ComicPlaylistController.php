@@ -33,11 +33,11 @@ class ComicPlaylistController extends Controller
         }
     }
 
-    public function comicRegistrado(Request $request){
+    public function comicRegistrado(Request $request,$cod_usuario,$cod_comic,$cod_playlist){
         $comic = DB::table('comic_playlist')
-        ->where('cod_comic', $request->cod_comic)
-        ->where('cod_usuario', $request->cod_usuario)
-        ->where('cod_playlist', $request->cod_playlist)
+        ->where('cod_comic', $cod_comic)
+        ->where('cod_usuario', $cod_usuario)
+        ->where('cod_playlist', $cod_playlist)
         ->first();
         if (!$comic){
             return response()->json(['exists' => false]);
