@@ -9,7 +9,7 @@ use App\Models\Comic_playlist;
 
 class ComicPlaylistController extends Controller
 {
-    public function registrarComicAPlaylist(Request $request, $cod_usuario, $cod_comic, $cod_playlist)
+    public function registrarComicAPlaylist(Request $request)
     {
         //
         DB::beginTransaction(); // Iniciar una transacción en la base de datos
@@ -17,9 +17,9 @@ class ComicPlaylistController extends Controller
         try {
             // Registrar el cómic
             $comicPlaylist = new Comic_playlist();
-            $comicPlaylist->cod_comic = $cod_comic;
-            $comicPlaylist->cod_usuario = $cod_usuario;
-            $comicPlaylist->cod_playlist = $cod_playlist;
+            $comicPlaylist->cod_comic = $request->cod_comic;
+            $comicPlaylist->cod_usuario = $request->cod_usuario;
+            $comicPlaylist->cod_playlist = $request->cod_playlist;
            
             $comicPlaylist->save();
 
