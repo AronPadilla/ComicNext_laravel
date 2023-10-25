@@ -2,8 +2,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// Asegúrate de importar el modelo User
+use Illuminate\Support\Facades\DB;
 use App\Models\Usuario;
+
 class UserController extends Controller
 {
     public function verificarCredenciales(Request $request)

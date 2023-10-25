@@ -29,17 +29,17 @@ Route::controller(ComicController::class)->group(function (){
 
 Route::controller(ComicPlaylistController::class)->group(function (){
     //Route::get('/playlists/{idUsuario}', 'obtenerPlaylist');
-    Route::get('/comicRegistradoPlaylist/{request}', 'comicRegistrado');
+    Route::get('/comicRegistradoPlaylist/{cod_usuario}/{cod_comic}/{cod_playlist}', 'comicRegistrado');
     Route::match(['get', 'post'], '/registroComicPlaylist', 'registrarComicAPlaylist');
-    Route::get('/comicPlaylist/{request}', 'obtenerComicsPlaylist');
+    Route::get('/comicPlaylist/{cod_usuario}/{cod_playlist}', 'obtenerComicsPlaylist');
     Route::get('/portadasC/{comicId}', 'getPortadaC')->name('getPortadaC');
-    Route::get('/comicPlaylistXTitulo/{request}', 'obtenerComicsPlaylistTitulo');
+    Route::get('/comicPlaylistXTitulo/{cod_usuario}/{cod_playlist}', 'obtenerComicsPlaylistTitulo');
 });
 
 Route::controller(PlaylistController::class)->group(function (){
     Route::get('/playlists/{idUsuario}', 'obtenerPlaylist');
     Route::get('/portadaPlaylist/{playlistId}', 'getPortadaPlaylist')->name('getPortadaPlaylist');
-    Route::get('/playlist/{idPlaylist}', 'datosPlaylist');
+    Route::get('/playlist/{idUsuario}/{idPlaylist}', 'datosPlaylist');
 });
 // Route::get('/images/{id}',[ListComicController::class, 'images']);
 
