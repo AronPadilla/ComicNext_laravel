@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\DB;
 
 class RegistroUsuarioController extends Controller
 {
@@ -31,13 +31,14 @@ class RegistroUsuarioController extends Controller
         // Respuesta de éxito
         return response()->json(['message' => 'Usuario registrado con éxito']);
     }
-    public function CorreoExistente($correo)
-{
-    $usuario = DB::table('user')->where('correo', $correo)->first();
-    if (!$usuario){
-        return response ()->json(['exists'=>false]);
+ //   public function CorreoExistente($correo)
+// {
+//     $usuario = DB::table('user')->where('correo', $correo)->first();
+//     if (!$usuario){
+//         return response ()->json(['exists'=>false]);
 
-    }else{
-        return response()->json(['exist'=>true]);
-    }
-}}
+//     }else{
+//         return response()->json(['exist'=>true]);
+//     }
+//}
+}
