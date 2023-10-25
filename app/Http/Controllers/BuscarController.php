@@ -11,12 +11,6 @@ class BuscarController extends Controller
 {
     public function comicFiltrar(Request $request, $nombreComic)
     {
-        // $comics = DB::table('comic')
-        //     ->select('cod_comic', 'titulo', 'sinopsis')
-        //     ->where('titulo', 'LIKE', '%'.$nombreComic.'%')
-        //     ->orderBy('comic.titulo')
-        //     ->get();
-
         $comics = Comic::whereRaw("lower(unaccent(titulo)) LIKE ?", ['%' . strtolower($nombreComic) . '%'])
             ->select('cod_comic', 'titulo', 'sinopsis')
             ->orderBy('titulo')
@@ -42,6 +36,32 @@ class BuscarController extends Controller
         return response()->json($comicsConPortada);
     }
     
+    public function filtrarArtista(Request $request, $nombreComic)
+    {
+        $comics = Comic::whereRaw("lower(unaccent(autor)) LIKE ?", ['%' . strtolower($nombreComic) . '%'])
+            ->select('cod_comic', 'titulo', 'sinopsis')
+            ->orderBy('titulo')
+            ->get();
+
+        if (!$comics) {
+            // Maneja el caso en que la categoría no se encuentra.
+            return response()->json(['error' => 'Comic no encontrada'], 404);
+        }
+            // Crear un arreglo para almacenar los cómics y sus URLs de portada
+        $comicsConPortada = [];
+    
+        foreach ($comics as $comic) {
+            $portadaUrl = route('getPortada', ['comicId' => $comic->cod_comic]);
+    
+            // Agregar el cómic y su URL de portada al arreglo
+            $comicsConPortada[] = [
+                'comic' => $comic,
+                'portadaUrl' => $portadaUrl,
+            ];
+        }
+    
+        return response()->json($comicsConPortada);
+    }
 
     public function getPortada(Request $request, $comicId)
     {
