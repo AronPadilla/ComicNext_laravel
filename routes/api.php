@@ -53,7 +53,7 @@ Route::controller(BuscarController::class)->group(function (){
     Route::get('/buscar/{nombreComic}', 'comicFiltrar');
     Route::get('/artista/{nombreAutor}', 'filtrarArtista');
     Route::get('/anio/{anioDeseado}', 'filtrarAnio');
-    Route::get('/cat/{nombreComic}', 'filtrarCat');
+    Route::get('/cat/{nombreCat}', 'filtrarCat');
     Route::get('/prueba', 'prueba');
     Route::get('/portadas/{comicId}', 'getPortada')->name('getPortada');
     Route::get('/imagen/{imgId}', 'getImagen');

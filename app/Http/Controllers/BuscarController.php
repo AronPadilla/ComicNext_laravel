@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use App\Models\comic;
+use App\Models\Comic_categoria;
 
 class BuscarController extends Controller
 {
@@ -63,9 +64,12 @@ class BuscarController extends Controller
         return response()->json($comicsConPortada);
     }
 
-    public function filtrarCat(Request $request, $nombreAutor)
+    public function filtrarCat(Request $request, $nombreCat)
     {
-        $categoria = Comic_categoria::whereRaw("lower(unaccent(categoria)) LIKE ?", ['%' . strtolower($nombreAutor) . '%'])->first();
+        $categoria = DB::table('categoria')
+    ->whereRaw("lower(unaccent(categoria)) LIKE ?", ['%' . strtolower($nombreCat) . '%'])
+    ->first();
+
     
         if (!$categoria) {
             // Maneja el caso en que la categoría no se encuentra.
@@ -108,9 +112,6 @@ class BuscarController extends Controller
             ->whereYear('anio_publicacion', '=', $anioDeseado)
             ->orderBy('titulo')
             ->get();
-
-
-      
 
         if (!$comics) {
             // Maneja el caso en que la categoría no se encuentra.
