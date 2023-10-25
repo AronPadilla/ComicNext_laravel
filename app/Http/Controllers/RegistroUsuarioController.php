@@ -19,7 +19,8 @@ class RegistroUsuarioController extends Controller
             return response()->json(['message' => 'Correo ya registrado']);
         }
 
-        // Si el correo no está registrado, procede con el registro del usuario
+       
+        // Si todas las validaciones pasan, procede con el registro del usuario
         $usuario = new Usuario();
         $usuario->nombre_completo = $request->input('name');
         $usuario->nombre_u = $request->input('username');
