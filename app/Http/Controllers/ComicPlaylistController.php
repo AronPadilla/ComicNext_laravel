@@ -53,7 +53,7 @@ class ComicPlaylistController extends Controller
         ->where('cod_playlist', $cod_playlist)
         ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis', 'comic.anio_publicacion', 'comic.autor')
         ->get();
-        $comics = $comics->reverse();
+        $comics = $comics;
         $comicsConPortada = [];
     
         foreach ($comics as $comic) {
@@ -109,4 +109,22 @@ class ComicPlaylistController extends Controller
     
         return response()->json($comicsConPortada);
     }
+    public function destroy(Request $request)
+    {
+        $cod_comic = $request->input('cod_comic');
+        $cod_usuario = $request->input('cod_usuario');
+        $cod_playlist = $request->input('cod_playlist');
+
+        $deletedRows = Comic_playlist::where([
+            ['cod_comic', '=', $cod_comic],
+            ['cod_usuario', '=', $cod_usuario],
+            ['cod_playlist', '=', $cod_playlist]
+        ])->delete();
+
+        if ($deletedRows > 0) {
+            return response()->json(['message' => 'Eliminado exitosamente'], 200);
+        } else {
+            return response()->json(['message' => 'No se encontraron registros para eliminar'], 404);
+        }
+    } 
 }
