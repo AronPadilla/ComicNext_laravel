@@ -11,7 +11,7 @@ class Comic_playlist extends Model
     protected $table = 'comic_playlist'; 
 
     protected $fillable = ['cod_comic','cod_usuario', 'cod_playlist','creacion_time'];
-    public $timestamps = true;
+    public $timestamps = false;
  
     protected $primaryKey = ['cod_comic',  'cod_usuario', 'cod_playlist']; 
     public $incrementing = false;
