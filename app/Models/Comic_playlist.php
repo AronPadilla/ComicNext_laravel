@@ -10,8 +10,8 @@ class Comic_playlist extends Model
     use HasFactory;
     protected $table = 'comic_playlist'; 
 
-    protected $fillable = ['cod_comic',  'cod_usuario', 'cod_playlist'];
-    public $timestamps = false;
+    protected $fillable = ['cod_comic','cod_usuario', 'cod_playlist','creacion_time'];
+    public $timestamps = true;
  
     protected $primaryKey = ['cod_comic',  'cod_usuario', 'cod_playlist']; 
     public $incrementing = false;

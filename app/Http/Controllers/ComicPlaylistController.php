@@ -16,10 +16,13 @@ class ComicPlaylistController extends Controller
 
         try {
             // Registrar el cómic
+            $creacionTime = now();
+            
             $comicPlaylist = new Comic_playlist();
             $comicPlaylist->cod_comic = $request->cod_comic;
             $comicPlaylist->cod_usuario = $request->cod_usuario;
             $comicPlaylist->cod_playlist = $request->cod_playlist;
+            $comicPlaylist->creacion_time = $creacionTime;
            
             $comicPlaylist->save();
 
@@ -46,14 +49,15 @@ class ComicPlaylistController extends Controller
         }
     }
 
-    public function obtenerComicsPlaylist(Request $request,  $cod_usuario,$cod_playlist){
+     public function obtenerComicsPlaylist(Request $request,  $cod_usuario,$cod_playlist){
         $comics = DB::table('comic_playlist')
         ->join('comic', 'comic_playlist.cod_comic', '=', 'comic.cod_comic')
         ->where('cod_usuario', $cod_usuario)
         ->where('cod_playlist', $cod_playlist)
         ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis', 'comic.anio_publicacion', 'comic.autor')
+        ->orderBy('creacion_time')
         ->get();
-        $comics = $comics;
+        // $comics = $comics;
         $comicsConPortada = [];
     
         foreach ($comics as $comic) {
@@ -68,6 +72,7 @@ class ComicPlaylistController extends Controller
     
         return response()->json($comicsConPortada);
     }
+    
 
     public function getPortadaC(Request $request, $comicId)
     {
