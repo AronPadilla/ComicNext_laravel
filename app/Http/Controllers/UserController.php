@@ -20,4 +20,12 @@ class UserController extends Controller
             return response()->json(['error' => 'Credenciales incorrectas'], 401);
         }
     }
+
+    public function incrementarFallidos(Request $request, $username){
+        //$username = $request->input('nombre_u');
+
+        Usuario::where('nombre_u', $username)->increment('nro_fallidos');
+        $nuevoNroFallidos = Usuario::where('nombre_u', $username)->value('nro_fallidos');
+        return $nuevoNroFallidos;
+    }
 }

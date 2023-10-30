@@ -82,5 +82,6 @@ Route::match(['get', 'post','delete'],'/deleteComicPlaylist',[ComicPlaylistContr
 Route::match(['get', 'post'], '/registro-usuario', [RegistroUsuarioController::class, 'registrar']);
 
 Route::get('/verificar-credenciales', [UserController::class, 'verificarCredenciales']);
+Route::get('/incrementarFallidos/{username}', [UserController::class, 'incrementarFallidos']);
 
 
