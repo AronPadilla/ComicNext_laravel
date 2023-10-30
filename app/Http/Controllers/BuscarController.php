@@ -12,7 +12,7 @@ class BuscarController extends Controller
 {
     public function comicFiltrar(Request $request, $nombreAutor)
     {
-        $comics = Comic::whereRaw("lower(unaccent(titulo)) LIKE ?", ['%' . strtolower($nombreAutor) . '%'])
+        $comics = Comic::whereRaw("lower(unaccent(titulo)) LIKE ?", [strtolower($nombreAutor) . '%'])
             ->select('cod_comic', 'titulo', 'sinopsis')
             ->orderBy('titulo')
             ->get();
@@ -39,7 +39,7 @@ class BuscarController extends Controller
     
     public function filtrarArtista(Request $request, $nombreAutor)
     {
-        $comics = Comic::whereRaw("lower(unaccent(autor)) LIKE ?", ['%' . strtolower($nombreAutor) . '%'])
+        $comics = Comic::whereRaw("lower(unaccent(autor)) LIKE ?", [strtolower($nombreAutor) . '%'])
             ->select('cod_comic', 'titulo', 'sinopsis')
             ->orderBy('titulo')
             ->get();
@@ -67,7 +67,7 @@ class BuscarController extends Controller
     public function filtrarCat(Request $request, $nombreCat)
     {
         $categoria = DB::table('categoria')
-    ->whereRaw("lower(unaccent(categoria)) LIKE ?", ['%' . strtolower($nombreCat) . '%'])
+    ->whereRaw("lower(unaccent(categoria)) LIKE ?", [strtolower($nombreCat) . '%'])
     ->first();
 
     
