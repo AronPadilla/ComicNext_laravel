@@ -17,11 +17,11 @@ class RegistroUsuarioController extends Controller
         $nombreUsuarioExistente = DB::table('usuario')->where('nombre_u', $nombreUsuario)->exists();
         
         if ($correoExistente && $nombreUsuarioExistente) {
-            return response()->json(['message' => 'Correo y nombre de usuario ya están registrados en esta página']);
+            return response()->json(['message' => 'Correo y nombre de usuario ya están registrados en esta página'], 409);
         } elseif ($correoExistente) {
-            return response()->json(['message' => 'Correo ya está registrado en esta página']);
+            return response()->json(['message' => 'Correo ya está registrado en esta página'],409);
         } elseif ($nombreUsuarioExistente) {
-            return response()->json(['message' => 'Nombre de usuario ya está registrado en esta página']);
+            return response()->json(['message' => 'Nombre de usuario ya está registrado en esta página'],409);
         }
     
         // Si ni el correo ni el nombre de usuario están registrados, procede con el registro del usuario
