@@ -64,25 +64,18 @@ class BuscarController extends Controller
         return response()->json($comicsConPortada);
     }
 
-    public function filtrarCat(Request $request, $nombreCat)
+    public function filtrarSinopsis(Request $request, $sinopsisIn)
     {
-        $categoria = DB::table('categoria')
-    ->whereRaw("lower(unaccent(categoria)) LIKE ?", [strtolower($nombreCat) . '%'])
-    ->first();
+        $comics = Comic::whereRaw("lower(unaccent(sinopsis)) LIKE ?",[ '%' . strtolower($sinopsisIn) . '%'])
+            ->select('cod_comic', 'titulo', 'sinopsis')
+            ->orderBy('titulo')
+            ->get();
 
     
-        if (!$categoria) {
+        if (!$comics) {
             // Maneja el caso en que la categoría no se encuentra.
             return response()->json(['error' => 'Categoría no encontrada'], 404);
         }
-
-        $comics = DB::table('comic_categoria')
-            ->join('comic', 'comic_categoria.cod_comic', '=', 'comic.cod_comic')
-            ->where('comic_categoria.cod_categoria', $categoria->cod_categoria)
-            ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis')
-            ->orderBy('comic.titulo')
-            ->get();
-
         
 
         if (!$comics) {
