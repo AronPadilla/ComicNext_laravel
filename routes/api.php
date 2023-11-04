@@ -11,6 +11,8 @@ use App\Http\Controllers\ComicPlaylistController;
 use App\Http\Controllers\RegistroUsuarioController;
 use App\Http\Controllers\BuscarController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ContenidoController;
+use App\Models\Contenido;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -40,6 +42,11 @@ Route::controller(PlaylistController::class)->group(function (){
     Route::get('/playlists/{idUsuario}', 'obtenerPlaylist');
     Route::get('/portadaPlaylist/{playlistId}', 'getPortadaPlaylist')->name('getPortadaPlaylist');
     Route::get('/playlist/{idUsuario}/{idPlaylist}', 'datosPlaylist');
+});
+
+Route::controller(ContenidoController::class)->group(function (){
+    Route::get('/comicsSinContenido', 'comicsSinContenido');
+    //Route::get('/portadasCC/{comicId}', 'getPortadaCC')->name('getPortadaCC');
 });
 // Route::get('/images/{id}',[ListComicController::class, 'images']);
 
