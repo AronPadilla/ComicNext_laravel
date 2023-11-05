@@ -32,6 +32,14 @@ class RegistroUsuarioController extends Controller
         $usuario->password = bcrypt($request->input('password'));
         $usuario->cod_rol = 2;
         $usuario->save();
+
+  
+        $details = [
+            'title' => 'Comic Nexus',
+            'content' => 'Bienvenido A Comic Nexux, tu resgistro ha sido exitoso.',
+        ];
+        
+        \Mail::to($correo)->send(new \App\Mail\TestMail($details));
         
         return response()->json(['message' => 'El usuario ha sido registrado con éxito']);
     }
