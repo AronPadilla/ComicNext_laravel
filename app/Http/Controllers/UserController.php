@@ -15,6 +15,13 @@ class UserController extends Controller
         $user = Usuario::where('nombre_u', $username)->first();
 
         if ($user && password_verify($password, $user->password)) {
+            $correo = $user->correo;
+            $details = [
+                'title' => 'Comic Nexus',
+                'content' => 'Bienvenido A Comic Nexux, tu resgistro ha sido exitoso.',
+            ];
+           
+            \Mail::to($correo)->send(new \App\Mail\TestMail($details));
             return response()->json(['cod_usuario' => $user->cod_usuario]);
         } else {
             return response()->json(['error' => 'Credenciales incorrectas'], 401);
