@@ -13,8 +13,8 @@ Route::post('/', [RegistroController::class, 'register'])->name('computer');
 
 Route::get('send-mail', function () {
     $details = [
-        'title' => 'Success',
-        'content' => 'This is an email testing using Laravel-Brevo',
+        'title' => 'Comic Nexus',
+        'content' => 'Bienvenido A Comic Nexux, tu resgistro ha sido exitoso.',
     ];
    
     \Mail::to('202103856@est.umss.edu')->send(new \App\Mail\TestMail($details));
