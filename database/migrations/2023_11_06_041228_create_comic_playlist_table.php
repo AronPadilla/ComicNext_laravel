@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('cod_comic')->index('pertenece_playllist_fk');
             $table->integer('cod_usuario');
             $table->integer('cod_playlist');
+            $table->timestamp('creacion_time')->nullable()->useCurrent();
 
             $table->primary(['cod_usuario', 'cod_comic', 'cod_playlist']);
             $table->unique(['cod_usuario', 'cod_comic', 'cod_playlist'], 'comic_playlist_pk');
