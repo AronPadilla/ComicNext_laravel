@@ -10,6 +10,8 @@ use App\Models\Usuario;
 Route::get('/', function () {
     return view('Registro');
 });
+Route::post('/verificar-correo', 'AuthController@verificarCorreo');
+
 //Route::post('/',[RegistroController::class, 'register']);
 //Route::get('/RegistroComics',[RegistroController::class, 'register']);
 Route::post('/', [RegistroController::class, 'register'])->name('computer');
