@@ -47,6 +47,7 @@ Route::controller(PlaylistController::class)->group(function (){
 
 Route::controller(ContenidoController::class)->group(function (){
     Route::get('/comicsSinContenido', 'comicsSinContenido');
+    Route::match(['get', 'post'], '/registroContenidoComic', 'registrarContenido');
     //Route::get('/portadasCC/{comicId}', 'getPortadaCC')->name('getPortadaCC');
 });
 // Route::get('/images/{id}',[ListComicController::class, 'images']);

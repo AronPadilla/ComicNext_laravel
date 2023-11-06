@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use App\Models\comic;
+use App\Models\Contenido;
 use Illuminate\Support\Facades\DB;
 
 class ContenidoController extends Controller
@@ -31,5 +32,30 @@ class ContenidoController extends Controller
         }
     
         return response()->json($comicsConPortada);
+    }
+    
+    public function registrarContenido(Request $request){
+
+        DB::beginTransaction();
+        try{
+            $imagenes = $request->imagenes;
+            $i = 1;
+            foreach($imagenes as $imagen){
+                $contenido = new Contenido();
+                $contenido->cod_comic = $request->cod_comic;
+                $contenido->nro_pagina = $i;
+                $contenido->pagina = str_replace("''", "'", pg_escape_bytea(base64_decode($imagen)));
+                $contenido->save();
+                $i++;
+            }
+           
+            DB::commit();
+            return response()->json(['mensaje' => 'Contenido de cómic registrado con éxito']);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+           return response()->json(['error' => 'Error al guardar la playlist: ' . $e->getMessage()], 500);
+       }
+        
     }
 }
