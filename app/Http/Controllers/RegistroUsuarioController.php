@@ -36,7 +36,7 @@ class RegistroUsuarioController extends Controller
   
         $details = [
             'title' => 'Comic Nexus',
-            'content' => 'Bienvenido A Comic Nexux, tu resgistro ha sido exitoso.',
+            'content' => 'Bienvenido A Comic Nexus, tu resgistro ha sido exitoso.',
         ];
         
         \Mail::to($correo)->send(new \App\Mail\TestMail($details));

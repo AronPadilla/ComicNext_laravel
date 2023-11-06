@@ -13,6 +13,7 @@ use App\Http\Controllers\BuscarController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContenidoController;
 use App\Models\Contenido;
+use App\Http\Controllers\AuthController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -91,4 +92,5 @@ Route::match(['get', 'post'], '/registro-usuario', [RegistroUsuarioController::c
 Route::get('/verificar-credenciales', [UserController::class, 'verificarCredenciales']);
 Route::get('/incrementarFallidos/{username}', [UserController::class, 'incrementarFallidos']);
 
+Route::get('/verificar-correo/{email}', [AuthController::class,'verificarCorreo']);
 
