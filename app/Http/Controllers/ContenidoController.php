@@ -16,7 +16,7 @@ class ContenidoController extends Controller
         ->whereNotIn('cod_comic', function ($query) {
             $query->select('cod_comic')->from('contenido');
         })
-        ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis')
+        ->select('comic.cod_comic', 'comic.titulo', 'comic.autor')
         ->get();
 
         $comicsConPortada = [];
