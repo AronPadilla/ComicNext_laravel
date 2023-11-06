@@ -20,11 +20,11 @@ class AuthController extends Controller
             // El correo existe en la base de datos
             $correo = $usuario -> correo;
             $details = [
-                'title' => 'Comic Nexus',
-                'content' => 'Bienvenido A Comic Nexus, tu resgistro ha sido exitoso.',
+                'nombre' => $usuario->nombre_u,
+                'link' => 'https://comicnexus.onrender.com/',
             ];
             
-            \Mail::to($correo)->send(new \App\Mail\TestMail($details));
+            \Mail::to($correo)->send(new \App\Mail\RecuperarMail($details));
             return response()->json(['message' => 'Correo verificado']);
         } else {
             return response()->json(['message' => 'Correo no encontrado'], 404);
