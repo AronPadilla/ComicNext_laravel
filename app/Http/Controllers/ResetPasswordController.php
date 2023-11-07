@@ -27,12 +27,13 @@ class ResetPasswordController extends Controller
         }
 
         // Actualizar la contraseña del usuario
-        $user->password = Hash::make($newPassword);
+        $user->update(['password' => Hash::make($newPassword)]);
+        // $user->password = Hash::make($newPassword);
 
-        echo 'Nueva contraseña: ' . $newPassword;
-        $user->save();
+        // echo 'Nueva contraseña: ' . $newPassword;
+        // $user->save();
 
-        echo $user;
+        // echo $user;
 
         return response()->json(['message' => 'Contraseña restablecida con éxito.']);
     }
