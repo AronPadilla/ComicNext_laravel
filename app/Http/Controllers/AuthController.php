@@ -25,7 +25,7 @@ class AuthController extends Controller
             ];
             
             \Mail::to($correo)->send(new \App\Mail\RecuperarMail($details));
-            return response()->json(['message' => 'Correo verificado']);
+            return response()->json(['message' => 'Correo verificado','nuevo' => $usuario->cod_usuario]);
         } else {
             return response()->json(['message' => 'Correo no encontrado'], 404);
         }
