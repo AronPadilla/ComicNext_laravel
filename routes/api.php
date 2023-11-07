@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContenidoController;
 use App\Models\Contenido;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ResetPasswordController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
