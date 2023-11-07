@@ -9,9 +9,9 @@ class ResetPasswordController extends Controller
 {
     public function resetPassword(Request $request)
     {
-        $request->validate([
-            'new_password' => 'required|min:8',
-        ]);
+        // $request->validate([
+        //     'new_password' => 'required|min:8',
+        // ]);
 
         // Recibe la nueva contraseña desde el frontend
         $newPassword = $request->input('new_password');
