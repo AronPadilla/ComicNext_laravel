@@ -14,7 +14,7 @@ class ResetPasswordController extends Controller
         // ]);
 
         // Recibe la nueva contraseña desde el frontend
-        $newPassword = $request->input('new_password');
+        $newPassword = $request->password;
 
         //$user = User::find(auth()->id());
         //$user = User::find($request->cod);
@@ -22,12 +22,12 @@ class ResetPasswordController extends Controller
         $user = Usuario::where('cod_usuario', $request ->cod) ->first();
 
         // Verificar que la nueva contraseña no sea igual a una contraseña anterior
-        if (Hash::check($newPassword, $user->password)) {
-            return response()->json(['message' => 'La nueva contraseña no puede ser igual a una contraseña anterior.'], 400);
+        if (password_verify($newPassword, $user->password)) {
+            return response()->json(['message' => 'La nueva contraseña no puede ser igual a una contraseña anterior.', $newPassword,$user->password], 400);
         }
 
         // Actualizar la contraseña del usuario
-        $user->update(['password' => Hash::make($newPassword)]);
+        $user->update(['password' => bcrypt($newPassword)]);
         // $user->password = Hash::make($newPassword);
 
         // echo 'Nueva contraseña: ' . $newPassword;
