@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use App\Models\Usuario;
 
 class ResetPasswordController extends Controller
 {
@@ -19,7 +19,7 @@ class ResetPasswordController extends Controller
         //$user = User::find(auth()->id());
         //$user = User::find($request->cod);
 
-        $user = User::where('cod_usuario', $request ->cod) ->first();
+        $user = Usuario::where('cod_usuario', $request ->cod) ->first();
 
         // Verificar que la nueva contraseña no sea igual a una contraseña anterior
         if (Hash::check($newPassword, $user->password)) {
