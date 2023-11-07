@@ -95,3 +95,7 @@ Route::get('/incrementarFallidos/{username}', [UserController::class, 'increment
 
 Route::get('/verificar-correo/{email}', [AuthController::class,'verificarCorreo']);
 
+Route::post('/reset-password', 'ResetPasswordController@resetPassword');
+
+
+

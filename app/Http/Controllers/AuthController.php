@@ -21,7 +21,7 @@ class AuthController extends Controller
             $correo = $usuario -> correo;
             $details = [
                 'nombre' => $usuario->nombre_u,
-                'link' => 'https://comicnexus.onrender.com/',
+                'link' => 'https://comicnexus.onrender.com/restablecer-contrase%C3%B1a',
             ];
             
             \Mail::to($correo)->send(new \App\Mail\RecuperarMail($details));
