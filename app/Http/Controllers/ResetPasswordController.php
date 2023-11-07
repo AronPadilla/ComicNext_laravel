@@ -17,7 +17,9 @@ class ResetPasswordController extends Controller
         $newPassword = $request->input('new_password');
 
         //$user = User::find(auth()->id());
-        $user = User::find($request->cod);
+        //$user = User::find($request->cod);
+
+        $user = User::where('cod_usuario', $request ->cod);
 
         // Verificar que la nueva contraseña no sea igual a una contraseña anterior
         if (Hash::check($newPassword, $user->password)) {
