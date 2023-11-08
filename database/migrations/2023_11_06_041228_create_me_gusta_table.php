@@ -1,33 +1,26 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateMeGustaTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('me_gusta', function (Blueprint $table) {
-            $table->integer('cod_usuario')->index('le_gusta_comic_fk');
-            $table->integer('cod_comic')->index('es_gustado_fk');
+            $table->unsignedBigInteger('cod_usuario');
+            $table->unsignedBigInteger('cod_comic');
+            $table->dateTime('fecha_creacion');
+            // ... otras columnas si las necesitas ...
 
             $table->primary(['cod_usuario', 'cod_comic']);
+            $table->foreign('cod_usuario')->references('id')->on('usuarios'); // Ajusta el nombre de la tabla 'usuarios' según tu estructura
+            $table->foreign('cod_comic')->references('id')->on('comics'); // Ajusta el nombre de la tabla 'comics' según tu estructura
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('me_gusta');
     }
-};
+}
