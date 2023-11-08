@@ -43,7 +43,7 @@ class ContenidoController extends Controller
             foreach($imagenes as $imagen){
                 $contenido = new Contenido();
                 $contenido->cod_comic = $request->cod_comic;
-                $contenido->nro_pagina = $i;
+                $contenido->nro_pagina = $request->pag;
                 $contenido->pagina = str_replace("''", "'", pg_escape_bytea(base64_decode($imagen)));
                 $contenido->save();
                 $i++;
