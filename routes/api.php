@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContenidoController;
 use App\Models\Contenido;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ResetPasswordController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -95,7 +96,7 @@ Route::get('/incrementarFallidos/{username}', [UserController::class, 'increment
 
 Route::get('/verificar-correo/{email}', [AuthController::class,'verificarCorreo']);
 
-Route::post('/reset-password', 'ResetPasswordController@resetPassword');
+Route::post('/reset-password', [ResetPasswordController::class,'resetPassword']);
 
 
 
