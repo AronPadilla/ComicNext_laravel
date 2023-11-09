@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Me_gusta;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class listfavoritosController extends Controller
+use Illuminate\Http\Request;
+
+class ComicFavoritosController extends Controller
 {
     public function registroComicFavoritos(Request $request)
     {
@@ -30,5 +30,4 @@ class listfavoritosController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         } 
     }
-     
 }
