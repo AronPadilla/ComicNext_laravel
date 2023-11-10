@@ -100,6 +100,9 @@ Route::match(['get', 'post'], '/registro-usuario', [RegistroUsuarioController::c
 Route::controller(UserController::class)->group(function (){
     Route::get('/verificar-credenciales', 'verificarCredenciales');
     Route::get('/incrementarFallidos/{username}', 'incrementarFallidos');
+    Route::get('/verificarBloqueado/{idUser}', 'verificarCuentaBloqueada')->name('verificarCuentaBloqueada');
+    Route::match(['get', 'post'], '/bloquearCuenta/{idUser}', 'bloquearCuenta');
+    Route::match(['get', 'post'], '/desbloquearCuenta/{idUser}', 'desbloquearCuenta');
 });
 // Route::get('/verificar-credenciales', [UserController::class, 'verificarCredenciales']);
 // Route::get('/incrementarFallidos/{username}', [UserController::class, 'incrementarFallidos']);

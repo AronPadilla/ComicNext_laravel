@@ -102,8 +102,8 @@ class PlaylistController extends Controller
         try{
             $playlist = Playlist::find($request->cod_playlist);
             if ($playlist) {
-                $playlist->delete();
                 Comic_playlist::where('cod_playlist', $request->cod_playlist)->delete();
+                $playlist->delete();
                 return response()->json(['mensaje' => 'Playlist eliminada con éxito']);
             } 
         }catch (\Exception $e) {
