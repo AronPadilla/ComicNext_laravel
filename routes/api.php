@@ -47,7 +47,7 @@ Route::controller(PlaylistController::class)->group(function (){
     Route::get('/portadaPlaylist/{playlistId}', 'getPortadaPlaylist')->name('getPortadaPlaylist');
     Route::get('/playlist/{idUsuario}/{idPlaylist}', 'datosPlaylist');
     Route::match(['get', 'post'], '/updatePlaylist', 'updatePlaylist');
-    Route::match(['get', 'post'], '/eliminarPlaylist', 'eliminarPlaylist');
+    Route::delete('/eliminarPlaylist', 'eliminarPlaylist');
 });
 
 Route::controller(ContenidoController::class)->group(function (){
@@ -97,8 +97,12 @@ Route::match(['get', 'post'], '/ComicFavoritos', [ComicFavoritosController::clas
 //Route::post('/registro-usuario', 'RegistroUsuarioController@registrar')->name('registro-usuario.registrar');
 Route::match(['get', 'post'], '/registro-usuario', [RegistroUsuarioController::class, 'registrar']);
 
-Route::get('/verificar-credenciales', [UserController::class, 'verificarCredenciales']);
-Route::get('/incrementarFallidos/{username}', [UserController::class, 'incrementarFallidos']);
+Route::controller(UserController::class)->group(function (){
+    Route::get('/verificar-credenciales', 'verificarCredenciales');
+    Route::get('/incrementarFallidos/{username}', 'incrementarFallidos');
+});
+// Route::get('/verificar-credenciales', [UserController::class, 'verificarCredenciales']);
+// Route::get('/incrementarFallidos/{username}', [UserController::class, 'incrementarFallidos']);
 
 Route::get('/verificar-correo/{email}', [AuthController::class,'verificarCorreo']);
 
