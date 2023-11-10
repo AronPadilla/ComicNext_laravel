@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use App\Models\Playlist;
+use App\Models\Comic_playlist;
 
 class PlaylistController extends Controller
 {
@@ -98,12 +99,16 @@ class PlaylistController extends Controller
     }
 
     public function eliminarPlaylist(Request $request){
-        $playlist = Playlist::find($request->cod_playlist);
-        if ($playlist) {
-            $playlist->delete();
-            return response()->json(['mensaje' => 'Playlist eliminada con éxito']);
-        } else {
-            return response()->json(['mensaje' => 'No se encontro la playlist']);
-        }
+        try{
+            $playlist = Playlist::find($request->cod_playlist);
+            if ($playlist) {
+                $playlist->delete();
+                Comic_playlist::where('cod_playlist', $request->cod_playlist)->delete();
+                return response()->json(['mensaje' => 'Playlist eliminada con éxito']);
+            } 
+        }catch (\Exception $e) {
+            DB::rollback();
+           return response()->json(['error' => 'Error al eliminar la playlist: ' . $e->getMessage()], 500);
+       }
     }
 }
