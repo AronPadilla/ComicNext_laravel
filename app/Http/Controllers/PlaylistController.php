@@ -96,4 +96,14 @@ class PlaylistController extends Controller
             return response()->json(['error' => 'Error al guardar cambios de la playlist: ' . $e->getMessage()], 500);
         }
     }
+
+    public function eliminarPlaylist(Request $request){
+        $playlist = Playlist::find($request->cod_playlist);
+        if ($playlist) {
+            $playlist->delete();
+            return response()->json(['mensaje' => 'Playlist eliminada con éxito']);
+        } else {
+            return response()->json(['mensaje' => 'No se encontro la playlist']);
+        }
+    }
 }
