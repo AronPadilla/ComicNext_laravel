@@ -80,15 +80,6 @@ class PlaylistController extends Controller
             $playlist = Playlist::find($request->cod_playlist);
             $playlist->nombre_playlist = $request->nombre_playlist;
             $playlist->imagen_playlist = str_replace("''", "'", pg_escape_bytea(base64_decode($imagen_playlist)));
-            // $playlist->imagen_playlist = $request->input('imagen_playlist');
-            // var_dump("inicio imagen");
-            // if ($imagen_playlist !== null) {
-            //     // Almacenar la imagen directamente en el modelo
-            //     $playlist->imagen_playlist = str_replace("''", "'", pg_escape_bytea(base64_decode($imagen_playlist)));
-            // } else {
-            //     // Si imagen_playlist es nulo, asignar null al campo imagen_playlist en el modelo
-            //     $playlist->imagen_playlist = null;
-            // }
             $playlist->update();
             DB::commit();
             return response()->json(['mensaje' => 'Playlist actualizado con éxito']);
@@ -110,5 +101,17 @@ class PlaylistController extends Controller
             DB::rollback();
            return response()->json(['error' => 'Error al eliminar la playlist: ' . $e->getMessage()], 500);
        }
+    }
+    public function nombrePlaylistExistente(Request $request){
+        $playlist = DB::table('playlist')
+        ->where('cod_usuario', $request->cod_usuario)
+        ->where('nombre_playlist', $request->nomPlaylist)
+        ->first();
+
+        if($playlist){
+            return response()->json(['exists' => true]);
+        }else{
+            return response()->json(['exists' => false]);
+        }
     }
 }

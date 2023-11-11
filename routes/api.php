@@ -48,6 +48,7 @@ Route::controller(PlaylistController::class)->group(function (){
     Route::get('/playlist/{idUsuario}/{idPlaylist}', 'datosPlaylist');
     Route::match(['get', 'post'], '/updatePlaylist', 'updatePlaylist');
     Route::delete('/eliminarPlaylist', 'eliminarPlaylist');
+    Route::get('/playlistExistente', 'nombrePlaylistExistente');
 });
 
 Route::controller(ContenidoController::class)->group(function (){
