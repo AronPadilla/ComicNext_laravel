@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Me_gusta;
-use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\DB;  
+use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 
 class ComicFavoritosController extends Controller
@@ -40,4 +40,43 @@ class ComicFavoritosController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    public function obtenerComicFavoritos ($cod_usuario){
+        $comicsFavortitos = DB::table('me_gusta')
+            ->join('comic', 'me_gusta.cod_comic', '=', 'comic.cod_comic')
+            ->where('cod_usuario', $cod_usuario)
+            ->orderByDesc('fecha_creacion')
+            ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis', 'comic.anio_publicacion', 'comic.autor')
+            ->get();
+            $comicsConPortada = [];
+    
+            foreach ($comicsFavortitos as $comic) {
+                $portadaUrl = route('getPortada', ['comicId' => $comic->cod_comic]);
+        
+                // Agregar el cómic y su URL de portada al arreglo
+                $comicsConPortada[] = [
+                    'comic' => $comic,
+                    'portadaUrl' => $portadaUrl,
+                ];
+            }
+        
+            return response()->json($comicsConPortada);
+        }
+        
+    
+        public function getPortadaC($comicId)
+        {
+            $comic = DB::table('comic')
+            ->where('cod_comic', $comicId)
+            ->first();
+    
+            if (!$comic || !$comic->portada) {
+                return response()->json(['error' => 'Cómic o portada no encontrados'], 404);
+            }
+    
+            $contenidoPortada = stream_get_contents($comic->portada);
+    
+            return Response::make($contenidoPortada, 200, [
+                'Content-Type' => 'image/jpeg',
+            ]);
+        }
 }
