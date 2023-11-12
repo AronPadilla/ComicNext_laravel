@@ -89,8 +89,7 @@ Route::match(['get', 'post'], '/registro', [RegistroController::class, 'register
 Route::match(['get', 'post'], '/registroplay', [CrearPlaylistController::class, 'registro']);
 Route::get('/listasPlaylist/{idUsuario}',[CrearPlaylistController::class, 'getPlaylist']);
 Route::match(['get', 'post','delete'],'/deleteComicPlaylist',[ComicPlaylistController::class, 'destroy']);
-// Route::match(['get', 'post'], '/ComicFavoritos', [ListfavoritosController::class, 'registroComicFavoritos']);
-Route::match(['get', 'post'], '/ComicFavoritos', [ComicFavoritosController::class, 'registroComicFavoritos']);
+Route::match(['get', 'post','delete'], '/ComicFavoritosLike', [ComicFavoritosController::class, 'registroComicFavoritosLike']);
 //Route::get('/registro-usuario', 'RegistroUsuarioController@index')->name('registro-usuario.index');
 //Route::post('/registro-usuario', 'RegistroUsuarioController@registrar')->name('registro-usuario.registrar');
 Route::match(['get', 'post'], '/registro-usuario', [RegistroUsuarioController::class, 'registrar']);
