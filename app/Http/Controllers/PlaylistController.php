@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use App\Models\Playlist;
+use App\Models\Comic_playlist;
 
 class PlaylistController extends Controller
 {
@@ -70,5 +71,47 @@ class PlaylistController extends Controller
             'portadaUrl' => $portadaUrl,
         ];
         return response()->json($playlistConPortada);
+    }
+
+    public function updatePlaylist(Request $request){
+        DB::beginTransaction();
+        try {
+            $imagen_playlist = $request->imagen_playlist;
+            $playlist = Playlist::find($request->cod_playlist);
+            $playlist->nombre_playlist = $request->nombre_playlist;
+            $playlist->imagen_playlist = str_replace("''", "'", pg_escape_bytea(base64_decode($imagen_playlist)));
+            $playlist->update();
+            DB::commit();
+            return response()->json(['mensaje' => 'Playlist actualizado con éxito']);
+        } catch (\Exception $e) {
+             DB::rollback();
+            return response()->json(['error' => 'Error al guardar cambios de la playlist: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function eliminarPlaylist(Request $request){
+        try{
+            $playlist = Playlist::find($request->cod_playlist);
+            if ($playlist) {
+                Comic_playlist::where('cod_playlist', $request->cod_playlist)->delete();
+                $playlist->delete();
+                return response()->json(['mensaje' => 'Playlist eliminada con éxito']);
+            } 
+        }catch (\Exception $e) {
+            DB::rollback();
+           return response()->json(['error' => 'Error al eliminar la playlist: ' . $e->getMessage()], 500);
+       }
+    }
+    public function nombrePlaylistExistente(Request $request){
+        $playlist = DB::table('playlist')
+        ->where('cod_usuario', $request->cod_usuario)
+        ->where('nombre_playlist', $request->nomPlaylist)
+        ->first();
+
+        if($playlist){
+            return response()->json(['exists' => true]);
+        }else{
+            return response()->json(['exists' => false]);
+        }
     }
 }

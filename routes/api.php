@@ -46,6 +46,9 @@ Route::controller(PlaylistController::class)->group(function (){
     Route::get('/playlists/{idUsuario}', 'obtenerPlaylist');
     Route::get('/portadaPlaylist/{playlistId}', 'getPortadaPlaylist')->name('getPortadaPlaylist');
     Route::get('/playlist/{idUsuario}/{idPlaylist}', 'datosPlaylist');
+    Route::match(['get', 'post'], '/updatePlaylist', 'updatePlaylist');
+    Route::delete('/eliminarPlaylist', 'eliminarPlaylist');
+    Route::get('/playlistExistente', 'nombrePlaylistExistente');
 });
 
 Route::controller(ContenidoController::class)->group(function (){
@@ -94,8 +97,15 @@ Route::match(['get', 'post','delete'], '/ComicFavoritosLike', [ComicFavoritosCon
 //Route::post('/registro-usuario', 'RegistroUsuarioController@registrar')->name('registro-usuario.registrar');
 Route::match(['get', 'post'], '/registro-usuario', [RegistroUsuarioController::class, 'registrar']);
 
-Route::get('/verificar-credenciales', [UserController::class, 'verificarCredenciales']);
-Route::get('/incrementarFallidos/{username}', [UserController::class, 'incrementarFallidos']);
+Route::controller(UserController::class)->group(function (){
+    Route::get('/verificar-credenciales', 'verificarCredenciales');
+    Route::get('/incrementarFallidos/{username}', 'incrementarFallidos');
+    Route::get('/verificarBloqueado/{idUser}', 'verificarCuentaBloqueada')->name('verificarCuentaBloqueada');
+    Route::match(['get', 'post'], '/bloquearCuenta/{idUser}', 'bloquearCuenta');
+    Route::match(['get', 'post'], '/desbloquearCuenta/{idUser}', 'desbloquearCuenta');
+});
+// Route::get('/verificar-credenciales', [UserController::class, 'verificarCredenciales']);
+// Route::get('/incrementarFallidos/{username}', [UserController::class, 'incrementarFallidos']);
 
 Route::get('/verificar-correo/{email}', [AuthController::class,'verificarCorreo']);
 
