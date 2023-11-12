@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use App\Models\comic;
 use App\Models\Comic_categoria;
+use App\Models\Me_gusta;
 
 class BuscarController extends Controller
 {
@@ -146,7 +147,7 @@ class BuscarController extends Controller
         ]);
     }
 
-    public function comic($id)
+    public function comic(Request $request, $id)
     {
         $comic = Comic::select('cod_comic', 'titulo','sinopsis', 'anio_publicacion', 'autor')
             ->where('cod_comic', $id)
@@ -156,14 +157,17 @@ class BuscarController extends Controller
         }
     
         $comicsConPortada = [];
-    
+        $comic_favoritos = Me_gusta::where('cod_comic', $id)
+        ->where('cod_usuario', $request->query('codUsuario'))
+        ->get();
         
         $portadaUrl = route('getPortada', ['comicId' => $comic->cod_comic]);
-    
+        $comic_favoritos = count($comic_favoritos);
         // Agregar el cómic y su URL de portada al arreglo
         $comicsConPortada[] = [
            'comic' => $comic,
-            'portadaUrl' => $portadaUrl,
+            'portadaUrl' => $portadaUrl,    
+            'comic_favoritos' => boolval($comic_favoritos), 
         ];
     
         return response()->json($comicsConPortada);
