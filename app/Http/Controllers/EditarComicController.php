@@ -18,7 +18,7 @@ class EditarComicController extends Controller
             'portada' => 'nullable|string', // Puedes validar el formato de la imagen aquí
             'categoria' => 'required|array',
         ]);
-
+        $portada = $request->portada;
         // Busca el cómic por ID
         $comic = Comic::find($id);
         if (!$comic) {
@@ -31,7 +31,7 @@ class EditarComicController extends Controller
             'autor' => $request->autor,
             'sinopsis' => $request->sinopsis,
             'anio_publicacion' => $request->anio_publicacion,
-            'portada' => $request->portada,
+            'portada' => str_replace("''", "'", pg_escape_bytea(base64_decode($portada))),
             // Maneja las categorías según la estructura de tu base de datos
         ]);
 
