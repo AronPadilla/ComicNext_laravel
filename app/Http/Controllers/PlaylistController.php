@@ -80,7 +80,7 @@ class PlaylistController extends Controller
             $playlist = Playlist::find($request->cod_playlist);
             $playlist->nombre_playlist = $request->nombre_playlist;
             $playlist->imagen_playlist = str_replace("''", "'", pg_escape_bytea(base64_decode($imagen_playlist)));
-            $playlist->update();
+            $playlist->save();
             DB::commit();
             return response()->json(['mensaje' => 'Playlist actualizado con éxito']);
         } catch (\Exception $e) {
