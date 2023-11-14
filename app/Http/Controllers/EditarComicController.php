@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Comic; // Suponiendo que tienes un modelo Comic
+use App\Models\comic; // Suponiendo que tienes un modelo Comic
 
 class EditarComicController extends Controller
 {
@@ -24,6 +24,8 @@ class EditarComicController extends Controller
         if (!$comic) {
             return response()->json(['error' => 'Cómic no encontrado'], 404);
         }
+
+        
 
         // Actualiza todos los campos
         $comic->update([
