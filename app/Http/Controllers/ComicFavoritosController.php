@@ -40,7 +40,7 @@ class ComicFavoritosController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-    public function obtenerComicFavoritos ($cod_usuario){
+    public function obtenerComicFavoritos (Request $request, $cod_usuario){
         $comicsFavortitos = DB::table('me_gusta')
             ->join('comic', 'me_gusta.cod_comic', '=', 'comic.cod_comic')
             ->where('cod_usuario', $cod_usuario)
@@ -48,7 +48,7 @@ class ComicFavoritosController extends Controller
             ->select('comic.cod_comic', 'comic.titulo', 'comic.sinopsis', 'comic.anio_publicacion', 'comic.autor')
             ->get();
             $comicsConPortada = [];
-    
+            $comic_favoritos = count($comicsFavortitos);
             foreach ($comicsFavortitos as $comic) {
                 $portadaUrl = route('getPortada', ['comicId' => $comic->cod_comic]);
         
@@ -56,6 +56,7 @@ class ComicFavoritosController extends Controller
                 $comicsConPortada[] = [
                     'comic' => $comic,
                     'portadaUrl' => $portadaUrl,
+                    'comic_favoritos' => boolval($comic_favoritos), 
                 ];
             }
         
