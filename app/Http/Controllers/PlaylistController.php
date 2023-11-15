@@ -78,14 +78,6 @@ class PlaylistController extends Controller
         DB::beginTransaction();
         try {
 
-            // $comic->update([
-            //     'titulo' => $request->titulo,
-            //     'autor' => $request->autor,
-            //     'sinopsis' => $request->sinopsis,
-            //     'anio_publicacion' => $request->anio_publicacion,
-            //     'portada' => str_replace("''", "'", pg_escape_bytea(base64_decode($portada))),
-            //     // Maneja las categorías según la estructura de tu base de datos
-            // ]);
             $imagen_playlist = $request->imagen_playlist;
             $playlist = Playlist::find($request->cod_playlist);
             if($imagen_playlist === 'Undefined'){
@@ -126,6 +118,7 @@ class PlaylistController extends Controller
         $playlist = DB::table('playlist')
         ->where('cod_usuario', $request->cod_usuario)
         ->where('nombre_playlist', $request->nomPlaylist)
+        ->where('cod_playlist', '!=', $request->cod_playlist)
         ->first();
 
         if($playlist){
