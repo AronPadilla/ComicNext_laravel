@@ -90,4 +90,13 @@ class UserController extends Controller
             return response()->json(['error' => 'Usuario no encontrado'], 401);
         }
     }
+
+    public function datosUser(Request $request){
+        $user = Usuario::where('cod_usuario',  $request->idUser)->first();
+        if($user){
+            return response()->json(['usuario' => $user]);
+        }else{
+            return response()->json(['error' => 'Usuario no encontrado'], 401);
+        }
+    }
 }
