@@ -11,6 +11,26 @@ use App\Models\Me_gusta;
 
 class BuscarController extends Controller
 {
+
+    public function obtener(Request $request)
+    {
+        
+        $comics = Comic::select('cod_comic', 'titulo', 'autor', 'sinopsis', 'anio_publicacion')->orderBy('titulo')->get();
+        $comicsConPortada = [];
+    
+        foreach ($comics as $comic) {
+            $portadaUrl = route('getPortada', ['comicId' => $comic->cod_comic]);
+    
+            // Agregar el cómic y su URL de portada al arreglo
+            $comicsConPortada[] = [
+                'comic' => $comic,
+                'portadaUrl' => $portadaUrl,
+            ];
+        }
+    
+        return response()->json($comicsConPortada);
+    }
+
     public function comicFiltrar(Request $request, $nombreAutor)
     {
         $comics = Comic::whereRaw("lower(unaccent(titulo)) LIKE ?", [strtolower($nombreAutor) . '%'])

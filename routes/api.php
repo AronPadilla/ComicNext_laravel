@@ -73,6 +73,7 @@ Route::controller(BuscarController::class)->group(function (){
     Route::get('/portadas/{comicId}', 'getPortada')->name('getPortada');
     Route::get('/imagen/{imgId}', 'getImagen');
     Route::get('/comic/{id}', 'comic');
+    Route::get('/getdatos/','obtener');
 });
 
 //Route::post('/RegistroComics',[RegistroController::class, 'register']);
