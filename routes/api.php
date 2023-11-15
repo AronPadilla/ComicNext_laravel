@@ -98,12 +98,14 @@ Route::get('/listasfavoritos/{idUsuario}',[ComicFavoritosController::class, 'obt
 //Route::post('/registro-usuario', 'RegistroUsuarioController@registrar')->name('registro-usuario.registrar');
 Route::match(['get', 'post'], '/registro-usuario', [RegistroUsuarioController::class, 'registrar']);
 Route::match(['get', 'post'], '/editar/{id}', [EditarComicController::class, 'editarComic']);
+
 Route::controller(UserController::class)->group(function (){
     Route::get('/verificar-credenciales', 'verificarCredenciales');
     Route::get('/incrementarFallidos/{username}', 'incrementarFallidos');
     Route::get('/verificarBloqueado/{idUser}', 'verificarCuentaBloqueada')->name('verificarCuentaBloqueada');
     Route::match(['get', 'post'], '/bloquearCuenta/{idUser}', 'bloquearCuenta');
     Route::match(['get', 'post'], '/desbloquearCuenta/{idUser}', 'desbloquearCuenta');
+    Route::match(['get', 'post'], '/cambiarNombreUser', 'cambiarNomUser');
 });
 // Route::get('/verificar-credenciales', [UserController::class, 'verificarCredenciales']);
 // Route::get('/incrementarFallidos/{username}', [UserController::class, 'incrementarFallidos']);
