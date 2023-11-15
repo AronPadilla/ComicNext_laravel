@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use App\Models\Playlist;
 use App\Models\Comic_playlist;
+use Mockery\Undefined;
 
 class PlaylistController extends Controller
 {
@@ -76,11 +77,30 @@ class PlaylistController extends Controller
     public function updatePlaylist(Request $request){
         DB::beginTransaction();
         try {
+
+            // $comic->update([
+            //     'titulo' => $request->titulo,
+            //     'autor' => $request->autor,
+            //     'sinopsis' => $request->sinopsis,
+            //     'anio_publicacion' => $request->anio_publicacion,
+            //     'portada' => str_replace("''", "'", pg_escape_bytea(base64_decode($portada))),
+            //     // Maneja las categorías según la estructura de tu base de datos
+            // ]);
             $imagen_playlist = $request->imagen_playlist;
             $playlist = Playlist::find($request->cod_playlist);
-            $playlist->nombre_playlist = $request->nombre_playlist;
-            $playlist->imagen_playlist = str_replace("''", "'", pg_escape_bytea(base64_decode($imagen_playlist)));
-            $playlist->save();
+            if($imagen_playlist === 'Undefined'){
+                $playlist->update([
+                    'nombre_playlist' => $request->nombre_playlist,
+                ]);
+            }else{
+                $playlist->update([
+                    'nombre_playlist' => $request->nombre_playlist,
+                    'imagen_playlist' => str_replace("''", "'", pg_escape_bytea(base64_decode($imagen_playlist))),
+                ]);
+            }
+            // $playlist->nombre_playlist = $request->nombre_playlist;
+            // $playlist->imagen_playlist = str_replace("''", "'", pg_escape_bytea(base64_decode($imagen_playlist)));
+            // $playlist->save();
             DB::commit();
             return response()->json(['mensaje' => 'Playlist actualizado con éxito']);
         } catch (\Exception $e) {
