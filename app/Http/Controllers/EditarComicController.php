@@ -26,7 +26,20 @@ class EditarComicController extends Controller
             return response()->json(['error' => 'Cómic no encontrado'], 404);
         }
 
-        // Actualiza todos los campos
+        if(empty($portada)){
+             // Actualiza todos los campos
+        $comic->update([
+            'titulo' => $request->titulo,
+            'autor' => $request->autor,
+            'sinopsis' => $request->sinopsis,
+            'anio_publicacion' => $request->anio_publicacion,
+          //  'portada' => str_replace("''", "'", pg_escape_bytea(base64_decode($portada))),
+            // Maneja las categorías según la estructura de tu base de datos
+        ]);
+            
+        }else {
+
+             // Actualiza todos los campos
         $comic->update([
             'titulo' => $request->titulo,
             'autor' => $request->autor,
@@ -35,6 +48,8 @@ class EditarComicController extends Controller
             'portada' => str_replace("''", "'", pg_escape_bytea(base64_decode($portada))),
             // Maneja las categorías según la estructura de tu base de datos
         ]);
+        }
+       
 
         // Eliminar todas las ctegorias el cómic por ID
         $cats = Comic_categoria::where('cod_comic', $id)->delete();
