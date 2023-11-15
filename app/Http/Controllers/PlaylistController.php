@@ -80,7 +80,7 @@ class PlaylistController extends Controller
 
             $imagen_playlist = $request->imagen_playlist;
             $playlist = Playlist::find($request->cod_playlist);
-            if($imagen_playlist === 'Undefined'){
+            if(empty($imagen_playlist)){
                 $playlist->update([
                     'nombre_playlist' => $request->nombre_playlist,
                 ]);
