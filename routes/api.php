@@ -105,7 +105,7 @@ Route::controller(UserController::class)->group(function (){
     Route::get('/verificarBloqueado/{idUser}', 'verificarCuentaBloqueada')->name('verificarCuentaBloqueada');
     Route::match(['get', 'post'], '/bloquearCuenta/{idUser}', 'bloquearCuenta');
     Route::match(['get', 'post'], '/desbloquearCuenta/{idUser}', 'desbloquearCuenta');
-    Route::match(['get', 'post'], '/cambiarNombreUser', 'cambiarNomUser');
+    Route::match(['get', 'post'], '/datosUser', 'datosUser');
 });
 // Route::get('/verificar-credenciales', [UserController::class, 'verificarCredenciales']);
 // Route::get('/incrementarFallidos/{username}', [UserController::class, 'incrementarFallidos']);

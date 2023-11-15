@@ -91,12 +91,9 @@ class UserController extends Controller
         }
     }
 
-    public function cambiarNomUser(Request $request){
+    public function datosUser(Request $request){
         $user = Usuario::where('cod_usuario',  $request->idUser)->first();
         if($user){
-            $user -> nombre_u = $request->nomUser;
-            $user->update();
-
             return response()->json(['usuario' => $user]);
         }else{
             return response()->json(['error' => 'Usuario no encontrado'], 401);
