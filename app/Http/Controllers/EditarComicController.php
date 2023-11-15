@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\comic; // Suponiendo que tienes un modelo Comic
+use App\Models\Comic_categoria;
 
 class EditarComicController extends Controller
 {
@@ -25,8 +26,6 @@ class EditarComicController extends Controller
             return response()->json(['error' => 'Cómic no encontrado'], 404);
         }
 
-        
-
         // Actualiza todos los campos
         $comic->update([
             'titulo' => $request->titulo,
@@ -36,6 +35,13 @@ class EditarComicController extends Controller
             'portada' => str_replace("''", "'", pg_escape_bytea(base64_decode($portada))),
             // Maneja las categorías según la estructura de tu base de datos
         ]);
+
+        // Buscar el cómic por ID
+        $categorias = Comic_categoria::where('cod_comic', $id);
+
+        foreach ($categorias as $categoria) {
+            $categoria->delete();
+        }
 
         return response()->json(['message' => 'Cómic editado exitosamente']);
     }
