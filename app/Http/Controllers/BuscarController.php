@@ -8,9 +8,49 @@ use Illuminate\Support\Facades\Response;
 use App\Models\comic;
 use App\Models\Comic_categoria;
 use App\Models\Me_gusta;
+use App\Models\Contenido;
+
 
 class BuscarController extends Controller
 {
+    public function getContenido(Request $request, $comicId) {
+        $contenido = Contenido::select('nro_pagina')
+            ->where('cod_comic', $comicId)
+            ->orderBy('nro_pagina', 'asc')
+            ->get();
+    
+        $comicsConPortada = [];
+
+        $comicsConPortada[] = [
+            'nro_pagina' => "portada",
+            'portada' => route('getPortada', ['comicId' => $comicId])
+        ];
+    
+        foreach ($contenido as $comic) {
+
+            $comicsConPortada[] = [
+                'nro_pagina' => $comic->nro_pagina,
+                'pagina' => route('getImage', ['idComic' => $comicId, 'numPag' => $comic->nro_pagina]),
+
+            ];
+        }
+    
+        return response()->json($comicsConPortada);
+    }
+    
+    public function getImage(Request $request,$comicId, $numPag)
+    {
+        $comic = DB::table('contenido')->where('cod_comic', $comicId)
+        ->where('nro_pagina', $numPag)->first();
+        
+        // Leer el contenido binario de la portada como una cadena de bytes
+        $contenidoPortada = stream_get_contents($comic->pagina);
+
+        // Devolver la imagen de portada como una respuesta HTTP con el tipo de contenido adecuado
+        return Response::make($contenidoPortada, 200, [
+            'Content-Type' => 'image/jpeg',
+        ]);
+    }
 
     public function obtener(Request $request)
     {
@@ -46,6 +86,7 @@ class BuscarController extends Controller
         $comicsConPortada = [];
     
         foreach ($comics as $comic) {
+
             $portadaUrl = route('getPortada', ['comicId' => $comic->cod_comic]);
     
             // Agregar el cómic y su URL de portada al arreglo
@@ -58,6 +99,8 @@ class BuscarController extends Controller
         return response()->json($comicsConPortada);
     }
     
+    
+
     public function filtrarArtista(Request $request, $nombreAutor)
     {
         $comics = Comic::whereRaw("lower(unaccent(autor)) LIKE ?", [strtolower($nombreAutor) . '%'])
