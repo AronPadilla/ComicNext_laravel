@@ -54,7 +54,7 @@ class BuscarController extends Controller
 
     public function obtener(Request $request)
     {
-        
+        set_time_limit(120);
         $comics = Comic::select('cod_comic', 'titulo', 'autor', 'sinopsis', 'anio_publicacion')->orderBy('titulo')->get();
         $comicsConPortada = [];
     
@@ -65,10 +65,33 @@ class BuscarController extends Controller
             $comicsConPortada[] = [
                 'comic' => $comic,
                 'portadaUrl' => $portadaUrl,
+                'categoria' => $this->getCasts( $comic->cod_comic),
             ];
         }
     
         return response()->json($comicsConPortada);
+    }
+
+    public function getCasts($id){
+        $cats = Comic_categoria::where('cod_comic', $id)->get();
+        $nombrecats = [];
+        foreach ($cats as $cat){
+            $categoria = DB::table('categoria')->where('cod_categoria', $cat->cod_categoria)->first();
+            $nombrecats[] = [
+                'categoria'=> $categoria->categoria,
+            ];
+        }
+        // Convertirlo a un arreglo asociativo
+        $arreglo = json_decode(json_encode($nombrecats), true);
+
+        // Obtener los valores de la columna "categoria"
+        $valores = array_column($arreglo, "categoria");
+        // $res = [];
+        // $res[] = [
+        //     'categoria'=>$valores
+        // ];
+        return $valores;
+
     }
 
     public function comicFiltrar(Request $request, $nombreAutor)
