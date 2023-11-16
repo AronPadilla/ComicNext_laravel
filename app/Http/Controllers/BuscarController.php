@@ -23,7 +23,7 @@ class BuscarController extends Controller
 
         $comicsConPortada[] = [
             'nro_pagina' => "portada",
-            'portada' => route('getPortada', ['comicId' => $comicId])
+            'pagina' => route('getPortada', ['comicId' => $comicId])
         ];
     
         foreach ($contenido as $comic) {
