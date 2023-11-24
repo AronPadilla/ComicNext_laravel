@@ -74,6 +74,9 @@ Route::controller(BuscarController::class)->group(function (){
     Route::get('/imagen/{imgId}', 'getImagen');
     Route::get('/comic/{id}', 'comic');
     Route::get('/getdatos/','obtener');
+    Route::get('/getpaginas/{idComic}','getContenido');
+    Route::get('/getimage/{idComic}/{numPag}','getImage')->name('getImage');
+    // Route::get('/getcats/{idComic}','getCasts');
 });
 
 //Route::post('/RegistroComics',[RegistroController::class, 'register']);
