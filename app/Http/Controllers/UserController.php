@@ -25,7 +25,7 @@ class UserController extends Controller
                 
                 } else {
                     $this->incrementarFallidos($username);
-                    if($user->nro_fallidos >= 5){
+                    if($user->nro_fallidos >= 4){
                         $this->bloquearCuenta($user->cod_usuario);
                     }
                     return response()->json(['error' => 'Credenciales incorrectas'], 401);
